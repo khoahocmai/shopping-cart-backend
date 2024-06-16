@@ -15,10 +15,9 @@ async function getUsers(req, res) {
         res.json(responseStatus_1.default.InternalErrorResponse());
     }
 } // Get all users
-async function getUserByUsername(req, res) {
+async function getCurrentUser(req, res) {
     try {
-        const username = req.params.username;
-        const user = await user_service_1.default.getUserByUsername(username);
+        const user = await user_service_1.default.getCurrentUser(req);
         res.json(responseStatus_1.default.DataResponse('Get user by username successfully!', user));
     }
     catch (error) {
@@ -28,5 +27,5 @@ async function getUserByUsername(req, res) {
 } // Get user by username
 exports.default = {
     getUsers,
-    getUserByUsername
+    getCurrentUser
 };

@@ -13,10 +13,9 @@ async function getUsers(req: Request, res: Response) {
   }
 } // Get all users
 
-async function getUserByUsername(req: Request, res: Response) {
+async function getCurrentUser(req: Request, res: Response) {
   try {
-    const username = req.params.username
-    const user = await UserService.getUserByUsername(username)
+    const user = await UserService.getCurrentUser(req)
     res.json(responseStatus.DataResponse('Get user by username successfully!', user))
   } catch (error) {
     console.log(error)
@@ -26,5 +25,5 @@ async function getUserByUsername(req: Request, res: Response) {
 
 export default {
   getUsers,
-  getUserByUsername
+  getCurrentUser
 }

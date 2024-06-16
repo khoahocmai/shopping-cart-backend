@@ -100,18 +100,11 @@ router.get('/', UserController.getUsers)
 
 /**
  * @swagger
- * /api/users/{username}:
+ * /api/users/current:
  *   get:
  *     tags:
  *       - user
  *     summary: Get a user by username
- *     parameters:
- *       - in: path
- *         name: username
- *         schema:
- *           type: string
- *         required: true
- *         description: The user's username
  *     responses:
  *       200:
  *         description: Returns the user data
@@ -141,6 +134,6 @@ router.get('/', UserController.getUsers)
  *                 message:
  *                   type: string
  */
-router.get('/:username', UserController.getUserByUsername)
+router.get('/current', UserController.getCurrentUser)
 
 export default router

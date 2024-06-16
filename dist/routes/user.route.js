@@ -100,18 +100,11 @@ const router = express_1.default.Router();
 router.get('/', user_controller_1.default.getUsers);
 /**
  * @swagger
- * /api/users/{username}:
+ * /api/users/current:
  *   get:
  *     tags:
  *       - user
  *     summary: Get a user by username
- *     parameters:
- *       - in: path
- *         name: username
- *         schema:
- *           type: string
- *         required: true
- *         description: The user's username
  *     responses:
  *       200:
  *         description: Returns the user data
@@ -141,5 +134,5 @@ router.get('/', user_controller_1.default.getUsers);
  *                 message:
  *                   type: string
  */
-router.get('/:username', user_controller_1.default.getUserByUsername);
+router.get('/current', user_controller_1.default.getCurrentUser);
 exports.default = router;

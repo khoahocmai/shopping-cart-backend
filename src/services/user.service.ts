@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { Request } from 'express'
+import jwt, { Secret } from 'jsonwebtoken'
 import { Op } from 'sequelize'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -44,6 +45,23 @@ async function getUserByUsername(username: string) {
   const user = await User.findOne({ where: { username } })
   return user
 } // Find user by username
+
+async function getCurrentUser(req: Request) {
+  const token = req.headers['authorization']
+  if (!token) {
+    throw new Error('No token provided')
+  }
+
+  const decodedToken: any = jwt.verify(token, process.env.SECRET as Secret)
+  const username = decodedToken.username
+
+  const user = await getUserByUsername(username)
+  if (!user) {
+    throw new Error('User not found')
+  }
+
+  return user
+} // Get current user
 
 async function deleteUser(id: string) {
   const result = await User.destroy({
@@ -107,6 +125,6 @@ export default {
   getUser,
   deleteUser,
   sendRegisterEmail,
-  getUserByUsername,
+  getCurrentUser,
   register
 }

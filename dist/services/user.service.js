@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sequelize_1 = require("sequelize");
 const uuid_1 = require("uuid");
 const user_model_1 = require("../models/user.model");
@@ -43,6 +44,19 @@ async function getUserByUsername(username) {
     const user = await user_model_1.User.findOne({ where: { username } });
     return user;
 } // Find user by username
+async function getCurrentUser(req) {
+    const token = req.headers['authorization'];
+    if (!token) {
+        throw new Error('No token provided');
+    }
+    const decodedToken = jsonwebtoken_1.default.verify(token, process.env.SECRET);
+    const username = decodedToken.username;
+    const user = await getUserByUsername(username);
+    if (!user) {
+        throw new Error('User not found');
+    }
+    return user;
+} // Get current user
 async function deleteUser(id) {
     const result = await user_model_1.User.destroy({
         where: { id }
@@ -94,6 +108,6 @@ exports.default = {
     getUser,
     deleteUser,
     sendRegisterEmail,
-    getUserByUsername,
+    getCurrentUser,
     register
 };
