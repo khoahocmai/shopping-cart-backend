@@ -47,6 +47,7 @@ async function createOrder(order: CreateOrder) {
     totalAmount: order.totalAmount,
     sizes: order.sizes,
     status: 'Pending',
+    design: order.design,
     deleted: false
   })
   return result

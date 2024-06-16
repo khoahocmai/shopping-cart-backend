@@ -32,6 +32,11 @@ export const Product = sequelize.define<ProductInstance>(tableName, {
     allowNull: false,
     unique: false
   },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: false
+  },
   deleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -49,6 +54,7 @@ export interface ProductAttributes {
   price: number
   previousPrice: number
   status: 'Available' | 'Unavailable'
+  imageUrl: string
   deleted: boolean
 }
 

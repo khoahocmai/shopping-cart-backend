@@ -22,7 +22,7 @@ async function payment(req) {
     const returnUrl = process.env.VNP_RETURN_URL;
     const codeVNPay = (0, moment_1.default)(date).format('DDHHmmss');
     const orderId = req.body.orderId;
-    const cashierId = req.body.cashierId;
+    const customerId = req.body.customerId;
     const amount = req.body.amount;
     const bankCode = req.body.bankCode;
     const locale = req.body.language || 'vn';
@@ -34,7 +34,7 @@ async function payment(req) {
         vnp_Locale: locale,
         vnp_CurrCode: currCode,
         vnp_TxnRef: codeVNPay,
-        vnp_OrderInfo: `${orderId}_${cashierId}`,
+        vnp_OrderInfo: `${orderId}_${customerId}`,
         vnp_OrderType: 'other',
         vnp_Amount: amount * 100,
         vnp_ReturnUrl: returnUrl,
@@ -69,7 +69,7 @@ async function vnpayReturn(req) {
     const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
     if (secureHash === signed) {
         const tmp = vnp_Params['vnp_OrderInfo'];
-        const [orderId, cashierId] = tmp.split('_');
+        const [orderId, customerId] = tmp.split('_');
         let paymentStatus;
         if (vnp_Params['vnp_BankCode'] == 'NCB') {
             paymentStatus = 'Card';
@@ -81,7 +81,7 @@ async function vnpayReturn(req) {
         await payment_model_1.Payment.create({
             id: (0, uuid_1.v4)(),
             orderId,
-            cashierId,
+            customerId,
             amount: vnp_Params['vnp_Amount'],
             paymentMethod: paymentStatus,
             paymentStatus: 'Completed',

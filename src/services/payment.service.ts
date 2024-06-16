@@ -26,7 +26,7 @@ async function payment(req: Request) {
 
   const codeVNPay = moment(date).format('DDHHmmss')
   const orderId = req.body.orderId
-  const cashierId = req.body.cashierId
+  const customerId = req.body.customerId
   const amount = req.body.amount
   const bankCode = req.body.bankCode
 
@@ -40,7 +40,7 @@ async function payment(req: Request) {
     vnp_Locale: locale,
     vnp_CurrCode: currCode,
     vnp_TxnRef: codeVNPay,
-    vnp_OrderInfo: `${orderId}_${cashierId}`,
+    vnp_OrderInfo: `${orderId}_${customerId}`,
     vnp_OrderType: 'other',
     vnp_Amount: amount * 100,
     vnp_ReturnUrl: returnUrl,
@@ -86,7 +86,7 @@ async function vnpayReturn(req: Request) {
 
   if (secureHash === signed) {
     const tmp = vnp_Params['vnp_OrderInfo'] as string
-    const [orderId, cashierId] = tmp.split('_')
+    const [orderId, customerId] = tmp.split('_')
 
     let paymentStatus
 
@@ -100,7 +100,7 @@ async function vnpayReturn(req: Request) {
     await Payment.create({
       id: uuidv4(),
       orderId,
-      cashierId,
+      customerId,
       amount: vnp_Params['vnp_Amount'] as number,
       paymentMethod: paymentStatus as PaymentMethod,
       paymentStatus: 'Completed',

@@ -43,6 +43,7 @@ async function createOrder(order) {
         totalAmount: order.totalAmount,
         sizes: order.sizes,
         status: 'Pending',
+        design: order.design,
         deleted: false
     });
     return result;

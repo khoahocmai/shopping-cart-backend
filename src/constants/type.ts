@@ -41,6 +41,7 @@ export interface CreateOrder {
   date: Date
   totalAmount: number
   sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  design: string
 }
 
 export interface UpdateOrder {

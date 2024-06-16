@@ -87,6 +87,7 @@ async function register(data) {
         return null;
     }
 } // Register user - Create user
+// Comment
 exports.default = {
     getAllUsers,
     getUserById,

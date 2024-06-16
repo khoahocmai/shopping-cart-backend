@@ -50,6 +50,7 @@ async function createProduct(productData) {
         price: productData.price,
         previousPrice: productData.previousPrice,
         status: productData.status,
+        imageUrl: productData.imageUrl,
         deleted: productData.deleted
     });
     return product;

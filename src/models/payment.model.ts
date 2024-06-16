@@ -13,7 +13,7 @@ export const Payment = sequelize.define<PaymentInstance>(tableName, {
     allowNull: false,
     unique: false
   },
-  cashierId: {
+  customerId: {
     type: DataTypes.UUID,
     allowNull: false,
     unique: false
@@ -49,7 +49,7 @@ export const Payment = sequelize.define<PaymentInstance>(tableName, {
 export interface PaymentAttributes {
   id: string
   orderId: string
-  cashierId: string
+  customerId: string
   amount: number
   paymentMethod: 'Card' | 'Cash'
   paymentStatus: 'Pending' | 'Completed' | 'Cancelled'

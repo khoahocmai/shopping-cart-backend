@@ -16,7 +16,7 @@ exports.Payment = database_1.default.define(tableName, {
         allowNull: false,
         unique: false
     },
-    cashierId: {
+    customerId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,
         unique: false

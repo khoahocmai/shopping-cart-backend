@@ -31,6 +31,10 @@ export const Order = sequelize.define<OrderInstance>(tableName, {
     allowNull: false,
     defaultValue: 'Pending'
   },
+  design: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   deleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -46,6 +50,7 @@ export interface OrderAttributes {
   totalAmount: number
   sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   status: 'Pending' | 'Completed'
+  design: string
   deleted: boolean
 }
 

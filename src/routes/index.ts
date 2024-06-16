@@ -1,7 +1,6 @@
 import express from 'express'
 
 import authRouter from '~/routes/auth.route'
-import designRouter from '~/routes/design.route'
 import mediaRouter from '~/routes/media.route'
 import orderRouter from '~/routes/order.route'
 import orderDetailRouter from '~/routes/orderDetail.route'
@@ -17,7 +16,6 @@ app.use('/auth', authRouter)
 app.use('/medias', mediaRouter)
 app.use('/orders', orderRouter)
 app.use('/order-details', orderDetailRouter)
-app.use('/designs', designRouter)
 app.use('/payments', paymentRouter)
 app.use('/health', (_, res) => res.send('OK'))
 

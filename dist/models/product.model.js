@@ -35,6 +35,11 @@ exports.Product = database_1.default.define(tableName, {
         allowNull: false,
         unique: false
     },
+    imageUrl: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+        unique: false
+    },
     deleted: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,

@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const auth_route_1 = __importDefault(require("../routes/auth.route"));
-const design_route_1 = __importDefault(require("../routes/design.route"));
 const media_route_1 = __importDefault(require("../routes/media.route"));
 const order_route_1 = __importDefault(require("../routes/order.route"));
 const orderDetail_route_1 = __importDefault(require("../routes/orderDetail.route"));
@@ -19,7 +18,6 @@ app.use('/auth', auth_route_1.default);
 app.use('/medias', media_route_1.default);
 app.use('/orders', order_route_1.default);
 app.use('/order-details', orderDetail_route_1.default);
-app.use('/designs', design_route_1.default);
 app.use('/payments', payment_route_1.default);
 app.use('/health', (_, res) => res.send('OK'));
 exports.default = app;
