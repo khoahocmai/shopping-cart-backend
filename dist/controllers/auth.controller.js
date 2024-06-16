@@ -34,8 +34,8 @@ const expiresIn = '1h';
 let refreshTokens = [];
 const register = async (req, res) => {
     try {
-        const { email, username, password, firstName, lastName, phone, role } = req.body;
-        if (!email || !username || !password || !firstName || !lastName || !phone || !role) {
+        const { email, username, password, name, phone, role } = req.body;
+        if (!email || !username || !password || !name || !phone || !role) {
             return res.json(responseStatus_1.default.MissingFieldResponse('Missing required fields'));
         }
         const salt = await bcrypt_1.default.genSalt(10);
@@ -44,8 +44,7 @@ const register = async (req, res) => {
             id: '',
             username,
             password: hashed,
-            firstName,
-            lastName,
+            name,
             phone,
             email,
             role
@@ -110,8 +109,7 @@ const login = async (req, res) => {
                 account: {
                     id: user.id,
                     username: user.username,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
+                    name: user.name,
                     email: user.email,
                     phone: user.phone,
                     role: user.role

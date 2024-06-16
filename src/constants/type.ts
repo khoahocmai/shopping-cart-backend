@@ -1,8 +1,7 @@
 export type Account = {
   id: string
   username: string
-  firstName: string
-  lastName: string
+  name: string
   phone: string
   email: string
   role: Role

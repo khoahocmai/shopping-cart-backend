@@ -11,8 +11,7 @@ export interface UserAttributes {
   id: string
   username: string
   password: string
-  firstName: string
-  lastName: string
+  name: string
   phone: string
   email: string
   role: Role
@@ -34,11 +33,7 @@ export const User = sequelize.define<UserInstance>(tableName, {
     type: DataTypes.STRING,
     allowNull: false
   },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  lastName: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false
   },

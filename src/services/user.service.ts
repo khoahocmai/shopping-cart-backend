@@ -40,6 +40,11 @@ async function getUser(fields: { username?: string; email?: string; id?: string 
   }
 } // Find user by 'Object user'
 
+async function getUserByUsername(username: string) {
+  const user = await User.findOne({ where: { username } })
+  return user
+} // Find user by username
+
 async function deleteUser(id: string) {
   const result = await User.destroy({
     where: { id }
@@ -73,24 +78,28 @@ async function sendRegisterEmail(username: string, email: string, password: stri
 async function register(data: {
   username: string
   password: string
-  firstName: string
-  lastName: string
+  name: string
   phone: string
   email: string
   role: Role
 }) {
-  const user = await User.create({
-    id: uuidv4(),
-    email: data.email,
-    username: data.username,
-    password: data.password,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    phone: data.phone,
-    role: data.role
-  })
-  return user
+  const findUser = await getUserByUsername(data.username)
+  if (!findUser) {
+    const user = await User.create({
+      id: uuidv4(),
+      email: data.email,
+      username: data.username,
+      password: data.password,
+      name: data.name,
+      phone: data.phone,
+      role: data.role
+    })
+    return user
+  } else {
+    return null
+  }
 } // Register user - Create user
+// Comment
 
 export default {
   getAllUsers,

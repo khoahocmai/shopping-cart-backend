@@ -13,8 +13,8 @@ let refreshTokens: string[] = []
 
 const register = async (req: Request, res: Response) => {
   try {
-    const { email, username, password, firstName, lastName, phone, role } = req.body
-    if (!email || !username || !password || !firstName || !lastName || !phone || !role) {
+    const { email, username, password, name, phone, role } = req.body
+    if (!email || !username || !password || !name || !phone || !role) {
       return res.json(responseStatus.MissingFieldResponse('Missing required fields'))
     }
 
@@ -24,8 +24,7 @@ const register = async (req: Request, res: Response) => {
       id: '',
       username,
       password: hashed,
-      firstName,
-      lastName,
+      name,
       phone,
       email,
       role
@@ -108,8 +107,7 @@ const login = async (req: Request, res: Response) => {
         account: {
           id: user.id,
           username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          name: user.name,
           email: user.email,
           phone: user.phone,
           role: user.role

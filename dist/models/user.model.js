@@ -20,11 +20,7 @@ exports.User = database_1.default.define(tableName, {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    firstName: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
-    lastName: {
+    name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },

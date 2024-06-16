@@ -39,6 +39,10 @@ async function getUser(fields) {
         return null;
     }
 } // Find user by 'Object user'
+async function getUserByUsername(username) {
+    const user = await user_model_1.User.findOne({ where: { username } });
+    return user;
+} // Find user by username
 async function deleteUser(id) {
     const result = await user_model_1.User.destroy({
         where: { id }
@@ -66,17 +70,22 @@ async function sendRegisterEmail(username, email, password, callback) {
     (0, sendEmail_util_1.sendEmail)(data.email, emailHeader, emailBody, callback);
 } // Send mail confirm user
 async function register(data) {
-    const user = await user_model_1.User.create({
-        id: (0, uuid_1.v4)(),
-        email: data.email,
-        username: data.username,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
-        role: data.role
-    });
-    return user;
+    const findUser = await getUserByUsername(data.username);
+    if (!findUser) {
+        const user = await user_model_1.User.create({
+            id: (0, uuid_1.v4)(),
+            email: data.email,
+            username: data.username,
+            password: data.password,
+            name: data.name,
+            phone: data.phone,
+            role: data.role
+        });
+        return user;
+    }
+    else {
+        return null;
+    }
 } // Register user - Create user
 exports.default = {
     getAllUsers,
