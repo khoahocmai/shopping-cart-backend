@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_route_1 = __importDefault(require("../routes/auth.route"));
+const design_route_1 = __importDefault(require("../routes/design.route"));
+const media_route_1 = __importDefault(require("../routes/media.route"));
+const order_route_1 = __importDefault(require("../routes/order.route"));
+const orderDetail_route_1 = __importDefault(require("../routes/orderDetail.route"));
+const payment_route_1 = __importDefault(require("../routes/payment.route"));
+const product_route_1 = __importDefault(require("../routes/product.route"));
+const user_route_1 = __importDefault(require("../routes/user.route"));
+const app = (0, express_1.default)();
+app.use('/users', user_route_1.default);
+app.use('/products', product_route_1.default);
+app.use('/auth', auth_route_1.default);
+app.use('/medias', media_route_1.default);
+app.use('/orders', order_route_1.default);
+app.use('/order-details', orderDetail_route_1.default);
+app.use('/designs', design_route_1.default);
+app.use('/payments', payment_route_1.default);
+app.use('/health', (_, res) => res.send('OK'));
+exports.default = app;
