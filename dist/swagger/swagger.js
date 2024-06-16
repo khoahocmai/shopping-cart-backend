@@ -52,6 +52,9 @@ const swaggerDocs = (app, PORT) => {
             servers: [
                 {
                     url: `http://localhost:${PORT}`
+                },
+                {
+                    url: `https://shopping-cart-dfyj.onrender.com/`
                 }
             ]
         },
