@@ -107,5 +107,6 @@ export default {
   getUser,
   deleteUser,
   sendRegisterEmail,
+  getUserByUsername,
   register
 }

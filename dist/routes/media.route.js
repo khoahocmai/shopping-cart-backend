@@ -8,7 +8,7 @@ const media_controller_1 = __importDefault(require("../controllers/media.control
 const router = express_1.default.Router();
 /**
  * @swagger
- * components:O
+ * components:
  *   schemas:
  *     File:
  *       type: object

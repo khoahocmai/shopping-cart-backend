@@ -11,8 +11,20 @@ async function getUsers(req: Request, res: Response) {
     console.log(error)
     res.json(responseStatus.InternalErrorResponse())
   }
-}
+} // Get all users
+
+async function getUserByUsername(req: Request, res: Response) {
+  try {
+    const username = req.params.username
+    const user = await UserService.getUserByUsername(username)
+    res.json(responseStatus.DataResponse('Get user by username successfully!', user))
+  } catch (error) {
+    console.log(error)
+    res.json(responseStatus.InternalErrorResponse())
+  }
+} // Get user by username
 
 export default {
-  getUsers
+  getUsers,
+  getUserByUsername
 }

@@ -6,7 +6,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * components:O
+ * components:
  *   schemas:
  *     File:
  *       type: object

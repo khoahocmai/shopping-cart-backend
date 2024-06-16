@@ -98,4 +98,48 @@ const router = express_1.default.Router();
  *                 $ref: '#/components/schemas/User'
  */
 router.get('/', user_controller_1.default.getUsers);
+/**
+ * @swagger
+ * /api/users/{username}:
+ *   get:
+ *     tags:
+ *       - user
+ *     summary: Get a user by username
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user's username
+ *     responses:
+ *       200:
+ *         description: Returns the user data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     username:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+router.get('/:username', user_controller_1.default.getUserByUsername);
 exports.default = router;
