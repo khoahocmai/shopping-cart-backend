@@ -1,7 +1,6 @@
 import express from 'express'
 
 import AuthController from '~/controllers/auth.controller'
-import authMiddleware from '~/middlewares/auth.middleware'
 
 const router = express.Router()
 
@@ -110,6 +109,6 @@ router.post('/refresh-token', AuthController.getRefreshToken)
  *       400:
  *         description: Bad request
  */
-router.post('/logout', authMiddleware.verifyToken, AuthController.logout)
+router.post('/logout', AuthController.logout)
 
 export default router

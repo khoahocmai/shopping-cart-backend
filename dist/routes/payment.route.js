@@ -62,9 +62,9 @@ const router = express_1.default.Router();
  *               orderId:
  *                 type: string
  *                 description: The order id
- *               cashierId:
+ *               customerId:
  *                 type: string
- *                 description: The cashier id
+ *                 description: The customer id
  *               amount:
  *                 type: number
  *                 description: The amount to be paid

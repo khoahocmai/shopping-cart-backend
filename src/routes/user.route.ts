@@ -1,12 +1,8 @@
 import express from 'express'
-import multer from 'multer'
 
-import MediaController from '~/controllers/media.controller'
 import UserController from '~/controllers/user.controller'
-import AuthMiddleware from '~/middlewares/auth.middleware'
 
 const router = express.Router()
-const upload = multer()
 
 /**
  * @swagger
@@ -100,6 +96,6 @@ const upload = multer()
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/', AuthMiddleware.verifyToken, UserController.getUsers)
+router.get('/', UserController.getUsers)
 
 export default router

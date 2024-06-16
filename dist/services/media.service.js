@@ -24,7 +24,7 @@ const bucketAccessKey = process.env.AWS_ACCESS_KEY_ID;
 const bucketSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const bucketName = process.env.AWS_S3_BUCKET;
 const bucketRegion = process.env.AWS_REGION;
-async function uploadImageFoodToS3(productId, file) {
+async function uploadImageClothesToS3(productId, file) {
     try {
         const product = await product_service_1.default.getProductById(productId);
         if (!product) {
@@ -62,7 +62,7 @@ async function uploadImageFoodToS3(productId, file) {
         return Promise.reject(error);
     }
 } // Upload image food to S3 AWS
-async function getFileFoodFromS3(productId) {
+async function getFileClothesFromS3(productId) {
     try {
         const product = await product_service_1.default.getProductById(productId);
         if (!product) {
@@ -108,7 +108,7 @@ function isImageFile(file) {
     return fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif';
 } // Check file is good format
 exports.default = {
-    uploadImageFoodToS3,
-    getFileFoodFromS3,
+    uploadImageClothesToS3,
+    getFileClothesFromS3,
     deleteFileFromS3
 };

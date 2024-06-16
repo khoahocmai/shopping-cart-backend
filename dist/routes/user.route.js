@@ -4,11 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const multer_1 = __importDefault(require("multer"));
 const user_controller_1 = __importDefault(require("../controllers/user.controller"));
-const auth_middleware_1 = __importDefault(require("../middlewares/auth.middleware"));
 const router = express_1.default.Router();
-const upload = (0, multer_1.default)();
 /**
  * @swagger
  * components:
@@ -100,5 +97,5 @@ const upload = (0, multer_1.default)();
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/', auth_middleware_1.default.verifyToken, user_controller_1.default.getUsers);
+router.get('/', user_controller_1.default.getUsers);
 exports.default = router;

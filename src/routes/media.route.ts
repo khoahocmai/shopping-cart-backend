@@ -1,14 +1,12 @@
 import express from 'express'
-import multer from 'multer'
 
 import MediaController from '~/controllers/media.controller'
 
 const router = express.Router()
-const upload = multer()
 
 /**
  * @swagger
- * components:
+ * components:O
  *   schemas:
  *     File:
  *       type: object
@@ -21,144 +19,6 @@ const upload = multer()
  *       example:
  *         file: file
  */
-
-// /**
-//  * @swagger
-//  * /api/medias/upload/avatar:
-//  *   post:
-//  *     tags:
-//  *       - media
-//  *     summary: Upload an avatar
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         multipart/form-data:
-//  *           schema:
-//  *             $ref: '#/components/schemas/File'
-//  *     responses:
-//  *       200:
-//  *         description: The avatar was successfully uploaded
-//  *       400:
-//  *         description: Bad request
-//  *       500:
-//  *         description: Internal server error
-//  */
-// router.post('/upload/avatar', upload.single('file'), MediaController.uploadAvatar)
-
-// /**
-//  * @swagger
-//  * /api/medias/upload/product:
-//  *   post:
-//  *     tags:
-//  *       - media
-//  *     summary: Upload a food image
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         multipart/form-data:
-//  *           schema:
-//  *             $ref: '#/components/schemas/File'
-//  *     responses:
-//  *       200:
-//  *         description: The food image was successfully uploaded
-//  *       400:
-//  *         description: Bad request
-//  *       500:
-//  *         description: Internal server error
-//  */
-// router.post('/upload/product', upload.single('file'), MediaController.uploadImageFood)
-
-// /**
-//  * @swagger
-//  * /api/medias/upload/category:
-//  *   post:
-//  *     tags:
-//  *       - media
-//  *     summary: Upload a category image
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         multipart/form-data:
-//  *           schema:
-//  *             $ref: '#/components/schemas/File'
-//  *     responses:
-//  *       200:
-//  *         description: The category image was successfully uploaded
-//  *       400:
-//  *         description: Bad request
-//  *       500:
-//  *         description: Internal server error
-//  */
-// router.post('/upload/category', upload.single('file'), MediaController.uploadImageCategory)
-
-// /**
-//  * @swagger
-//  * /api/medias/avatar/{userId}:
-//  *   get:
-//  *     tags:
-//  *       - media
-//  *     summary: Get a user's avatar
-//  *     parameters:
-//  *       - in: path
-//  *         name: userId
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *     responses:
-//  *       200:
-//  *         description: The avatar URL was successfully retrieved
-//  *       400:
-//  *         description: Bad request
-//  *       500:
-//  *         description: Internal server error
-//  */
-// router.get('/avatar/:userId', MediaController.getUserAvatarUrl)
-
-// /**
-//  * @swagger
-//  * /api/medias/food/{productId}:
-//  *   get:
-//  *     tags:
-//  *       - media
-//  *     summary: Get a product's image
-//  *     parameters:
-//  *       - in: path
-//  *         name: productId
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *     responses:
-//  *       200:
-//  *         description: The product image URL was successfully retrieved
-//  *       400:
-//  *         description: Bad request
-//  *       500:
-//  *         description: Internal server error
-//  */
-// router.get('/food/:productId', MediaController.getImageFoodUrl)
-
-// /**
-//  * @swagger
-//  * /api/medias/category/{categoryId}:
-//  *   get:
-//  *     tags:
-//  *       - media
-//  *     summary: Get a category's image
-//  *     parameters:
-//  *       - in: path
-//  *         name: categoryId
-//  *         required: true
-//  *         schema:
-//  *           type: string
-//  *     responses:
-//  *       200:
-//  *         description: The category image URL was successfully retrieved
-//  *       400:
-//  *         description: Bad request
-//  *       500:
-//  *         description: Internal server error
-//  */
-// router.get('/category/:categoryId', MediaController.getImageCateUrl)
 
 /**
  * @swagger

@@ -2,8 +2,6 @@ import express from 'express'
 
 import OrderController from '~/controllers/order.controller'
 import OrderDetailController from '~/controllers/orderDetail.controller'
-import OrderMiddleware from '~/middlewares/order.middleware'
-import OrderDetailMiddleware from '~/middlewares/orderDetail.middleware'
 
 const router = express.Router()
 
@@ -170,7 +168,7 @@ router.get('/', OrderController.getOrders)
  *             schema:
  *               $ref: '#/components/schemas/Order'
  */
-router.post('/', OrderMiddleware.validateOrder, OrderController.createOrder)
+router.post('/', OrderController.createOrder)
 
 /**
  * @swagger
@@ -224,7 +222,7 @@ router.get('/:id', OrderController.getOrder)
  *             schema:
  *               $ref: '#/components/schemas/Order'
  */
-router.put('/:id', OrderMiddleware.validateOrder, OrderController.updateOrder)
+router.put('/:id', OrderController.updateOrder)
 
 /**
  * @swagger
@@ -320,11 +318,7 @@ router.get('/:orderId/order-detail/', OrderDetailController.getOrderDetailsByOrd
  *             schema:
  *               $ref: '#/components/schemas/OrderDetail'
  */
-router.post(
-  '/:orderId/order-detail/',
-  OrderDetailMiddleware.validateOrderDetail,
-  OrderDetailController.createOrderDetail
-)
+router.post('/:orderId/order-detail/', OrderDetailController.createOrderDetail)
 
 /**
  * @swagger
@@ -390,11 +384,7 @@ router.get('/:orderId/order-detail/:id', OrderDetailController.getOrderDetail)
  *             schema:
  *               $ref: '#/components/schemas/OrderDetail'
  */
-router.put(
-  '/:orderId/order-detail/:id',
-  OrderDetailMiddleware.validateOrderDetail,
-  OrderDetailController.updateOrderDetail
-)
+router.put('/:orderId/order-detail/:id', OrderDetailController.updateOrderDetail)
 
 /**
  * @swagger

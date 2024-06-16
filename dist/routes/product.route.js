@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const media_controller_1 = __importDefault(require("../controllers/media.controller"));
 const product_controller_1 = __importDefault(require("../controllers/product.controller"));
-const product_middleware_1 = __importDefault(require("../middlewares/product.middleware"));
 const router = express_1.default.Router();
 const upload = (0, multer_1.default)();
 /**
@@ -137,7 +136,7 @@ router.get('/', product_controller_1.default.getProducts);
  *             schema:
  *               $ref: '#/components/schemas/Product'
  */
-router.post('/', product_middleware_1.default.validateProduct, product_controller_1.default.createProduct);
+router.post('/', product_controller_1.default.createProduct);
 /**
  * @swagger
  * /api/products/{id}:
@@ -189,7 +188,7 @@ router.get('/:id', product_controller_1.default.getProductById);
  *             schema:
  *               $ref: '#/components/schemas/Product'
  */
-router.put('/:id', product_middleware_1.default.validateProduct, product_controller_1.default.updateProduct);
+router.put('/:id', product_controller_1.default.updateProduct);
 /**
  * @swagger
  * /api/products/{id}:
@@ -230,7 +229,7 @@ router.delete('/:id', product_controller_1.default.deleteProduct);
  *       500:
  *         description: Internal server error
  */
-router.get('/image/:id', media_controller_1.default.getImageFoodUrl);
+router.get('/image/:id', media_controller_1.default.getImageClothesUrl);
 /**
  * @swagger
  * /api/products/image/upload:
@@ -252,5 +251,5 @@ router.get('/image/:id', media_controller_1.default.getImageFoodUrl);
  *       500:
  *         description: Internal server error
  */
-router.post('/image/upload', upload.single('file'), media_controller_1.default.uploadImageFood);
+router.post('/image/upload', upload.single('file'), media_controller_1.default.uploadImageClothes);
 exports.default = router;

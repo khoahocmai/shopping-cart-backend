@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import responseStatus from '~/constants/responseStatus'
 import MediaService from '~/services/media.service'
 
-async function uploadImageFood(req: Request, res: Response): Promise<void> {
+async function uploadImageClothes(req: Request, res: Response): Promise<void> {
   try {
     const file = req.file
     const productId = req.body.productId
@@ -12,14 +12,14 @@ async function uploadImageFood(req: Request, res: Response): Promise<void> {
       return
     }
 
-    const result = await MediaService.uploadImageFoodToS3(productId, file)
+    const result = await MediaService.uploadImageClothesToS3(productId, file)
     res.json(responseStatus.CreateSuccessResponse('Upload image success', result))
   } catch (error: string | any) {
     res.json(responseStatus.InternalErrorResponse(error.message))
   }
-} // Controller Upload image food to S3 AWS
+} // Controller Upload image clothes to S3 AWS
 
-async function getImageFoodUrl(req: Request, res: Response): Promise<void> {
+async function getImageClothesUrl(req: Request, res: Response): Promise<void> {
   try {
     const { id } = req.params
     if (!id) {
@@ -27,13 +27,13 @@ async function getImageFoodUrl(req: Request, res: Response): Promise<void> {
       return
     }
 
-    const url = await MediaService.getFileFoodFromS3(id)
+    const url = await MediaService.getFileClothesFromS3(id)
     res.json(responseStatus.DataResponse('', url))
   } catch (error: string | any) {
     console.error(error)
     res.json(responseStatus.InternalErrorResponse(error.message))
   }
-} // Controller Get image food URL from S3 AWS
+} // Controller Get image clothes URL from S3 AWS
 
 async function deleteFileFromS3(req: Request, res: Response): Promise<void> {
   try {
@@ -52,7 +52,7 @@ async function deleteFileFromS3(req: Request, res: Response): Promise<void> {
 } // Controller Delete file from S3 AWS
 
 export default {
-  uploadImageFood,
-  getImageFoodUrl,
+  uploadImageClothes,
+  getImageClothesUrl,
   deleteFileFromS3
 }

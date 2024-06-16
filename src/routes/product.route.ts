@@ -3,7 +3,6 @@ import multer from 'multer'
 
 import MediaController from '~/controllers/media.controller'
 import ProductController from '~/controllers/product.controller'
-import ProductMiddleware from '~/middlewares/product.middleware'
 
 const router = express.Router()
 const upload = multer()
@@ -137,7 +136,7 @@ router.get('/', ProductController.getProducts)
  *             schema:
  *               $ref: '#/components/schemas/Product'
  */
-router.post('/', ProductMiddleware.validateProduct, ProductController.createProduct)
+router.post('/', ProductController.createProduct)
 
 /**
  * @swagger
@@ -191,7 +190,7 @@ router.get('/:id', ProductController.getProductById)
  *             schema:
  *               $ref: '#/components/schemas/Product'
  */
-router.put('/:id', ProductMiddleware.validateProduct, ProductController.updateProduct)
+router.put('/:id', ProductController.updateProduct)
 
 /**
  * @swagger
@@ -234,7 +233,7 @@ router.delete('/:id', ProductController.deleteProduct)
  *       500:
  *         description: Internal server error
  */
-router.get('/image/:id', MediaController.getImageFoodUrl)
+router.get('/image/:id', MediaController.getImageClothesUrl)
 
 /**
  * @swagger
@@ -257,6 +256,6 @@ router.get('/image/:id', MediaController.getImageFoodUrl)
  *       500:
  *         description: Internal server error
  */
-router.post('/image/upload', upload.single('file'), MediaController.uploadImageFood)
+router.post('/image/upload', upload.single('file'), MediaController.uploadImageClothes)
 
 export default router

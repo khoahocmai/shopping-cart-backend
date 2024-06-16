@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const responseStatus_1 = __importDefault(require("../constants/responseStatus"));
 const media_service_1 = __importDefault(require("../services/media.service"));
-async function uploadImageFood(req, res) {
+async function uploadImageClothes(req, res) {
     try {
         const file = req.file;
         const productId = req.body.productId;
@@ -13,28 +13,28 @@ async function uploadImageFood(req, res) {
             res.json(responseStatus_1.default.MissingFieldResponse('No file uploaded'));
             return;
         }
-        const result = await media_service_1.default.uploadImageFoodToS3(productId, file);
+        const result = await media_service_1.default.uploadImageClothesToS3(productId, file);
         res.json(responseStatus_1.default.CreateSuccessResponse('Upload image success', result));
     }
     catch (error) {
         res.json(responseStatus_1.default.InternalErrorResponse(error.message));
     }
-} // Controller Upload image food to S3 AWS
-async function getImageFoodUrl(req, res) {
+} // Controller Upload image clothes to S3 AWS
+async function getImageClothesUrl(req, res) {
     try {
         const { id } = req.params;
         if (!id) {
             res.json(responseStatus_1.default.MissingFieldResponse('User is required'));
             return;
         }
-        const url = await media_service_1.default.getFileFoodFromS3(id);
+        const url = await media_service_1.default.getFileClothesFromS3(id);
         res.json(responseStatus_1.default.DataResponse('', url));
     }
     catch (error) {
         console.error(error);
         res.json(responseStatus_1.default.InternalErrorResponse(error.message));
     }
-} // Controller Get image food URL from S3 AWS
+} // Controller Get image clothes URL from S3 AWS
 async function deleteFileFromS3(req, res) {
     try {
         const { filename } = req.params;
@@ -51,7 +51,7 @@ async function deleteFileFromS3(req, res) {
     }
 } // Controller Delete file from S3 AWS
 exports.default = {
-    uploadImageFood,
-    getImageFoodUrl,
+    uploadImageClothes,
+    getImageClothesUrl,
     deleteFileFromS3
 };

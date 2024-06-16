@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const order_controller_1 = __importDefault(require("../controllers/order.controller"));
 const orderDetail_controller_1 = __importDefault(require("../controllers/orderDetail.controller"));
-const order_middleware_1 = __importDefault(require("../middlewares/order.middleware"));
-const orderDetail_middleware_1 = __importDefault(require("../middlewares/orderDetail.middleware"));
 const router = express_1.default.Router();
 /**
  * @swagger
@@ -170,7 +168,7 @@ router.get('/', order_controller_1.default.getOrders);
  *             schema:
  *               $ref: '#/components/schemas/Order'
  */
-router.post('/', order_middleware_1.default.validateOrder, order_controller_1.default.createOrder);
+router.post('/', order_controller_1.default.createOrder);
 /**
  * @swagger
  * /api/orders/{id}:
@@ -222,7 +220,7 @@ router.get('/:id', order_controller_1.default.getOrder);
  *             schema:
  *               $ref: '#/components/schemas/Order'
  */
-router.put('/:id', order_middleware_1.default.validateOrder, order_controller_1.default.updateOrder);
+router.put('/:id', order_controller_1.default.updateOrder);
 /**
  * @swagger
  * /api/orders/{id}:
@@ -315,7 +313,7 @@ router.get('/:orderId/order-detail/', orderDetail_controller_1.default.getOrderD
  *             schema:
  *               $ref: '#/components/schemas/OrderDetail'
  */
-router.post('/:orderId/order-detail/', orderDetail_middleware_1.default.validateOrderDetail, orderDetail_controller_1.default.createOrderDetail);
+router.post('/:orderId/order-detail/', orderDetail_controller_1.default.createOrderDetail);
 /**
  * @swagger
  * /api/orders/{order_id}/order-details/{id}:
@@ -379,7 +377,7 @@ router.get('/:orderId/order-detail/:id', orderDetail_controller_1.default.getOrd
  *             schema:
  *               $ref: '#/components/schemas/OrderDetail'
  */
-router.put('/:orderId/order-detail/:id', orderDetail_middleware_1.default.validateOrderDetail, orderDetail_controller_1.default.updateOrderDetail);
+router.put('/:orderId/order-detail/:id', orderDetail_controller_1.default.updateOrderDetail);
 /**
  * @swagger
  * /api/orders/{order_id}/order-details/{id}:

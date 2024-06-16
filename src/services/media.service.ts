@@ -27,7 +27,7 @@ const bucketSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 const bucketName = process.env.AWS_S3_BUCKET
 const bucketRegion = process.env.AWS_REGION
 
-async function uploadImageFoodToS3(productId: string, file: Express.Multer.File): Promise<void> {
+async function uploadImageClothesToS3(productId: string, file: Express.Multer.File): Promise<void> {
   try {
     const product = await productService.getProductById(productId)
     if (!product) {
@@ -65,7 +65,7 @@ async function uploadImageFoodToS3(productId: string, file: Express.Multer.File)
   }
 } // Upload image food to S3 AWS
 
-async function getFileFoodFromS3(productId: string): Promise<string> {
+async function getFileClothesFromS3(productId: string): Promise<string> {
   try {
     const product = await productService.getProductById(productId)
     if (!product) {
@@ -114,7 +114,7 @@ function isImageFile(file: Express.Multer.File): boolean {
 } // Check file is good format
 
 export default {
-  uploadImageFoodToS3,
-  getFileFoodFromS3,
+  uploadImageClothesToS3,
+  getFileClothesFromS3,
   deleteFileFromS3
 }
