@@ -280,7 +280,7 @@ router.delete('/:id', OrderController.deleteOrder)
 // Phần order detail route
 /**
  * @swagger
- * /api/orders/{order_id}/order-details:
+ * /api/orders/{order_id}/order-detail:
  *   get:
  *     summary: Get all order details for a specific order
  *     tags:
@@ -325,7 +325,7 @@ router.get('/:orderId/order-detail/', OrderDetailController.getOrderDetailsByOrd
 
 /**
  * @swagger
- * /api/orders/{order_id}/order-details:
+ * /api/orders/{order_id}/order-detail:
  *   post:
  *     tags:
  *       - order
@@ -355,7 +355,7 @@ router.post('/:orderId/order-detail/', OrderDetailController.createOrderDetail)
 
 /**
  * @swagger
- * /api/orders/{order_id}/order-details/{id}:
+ * /api/orders/{order_id}/order-detail/{id}:
  *   get:
  *     tags:
  *       - order
@@ -385,7 +385,7 @@ router.get('/:orderId/order-detail/:id', OrderDetailController.getOrderDetail)
 
 /**
  * @swagger
- * /api/orders/{order_id}/order-details/{id}:
+ * /api/orders/{order_id}/order-detail/{id}:
  *   put:
  *     tags:
  *       - order
@@ -421,7 +421,7 @@ router.put('/:orderId/order-detail/:id', OrderDetailController.updateOrderDetail
 
 /**
  * @swagger
- * /api/orders/{order_id}/order-details/{id}:
+ * /api/orders/{order_id}/order-detail/{id}:
  *   delete:
  *     tags:
  *       - order

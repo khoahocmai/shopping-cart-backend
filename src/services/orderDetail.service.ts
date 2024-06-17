@@ -11,35 +11,18 @@ import orderService from './order.service'
 import productService from './product.service'
 
 async function getAllOrderDetails() {
-  const orderDetails = await OrderDetail.findAll({
-    include: [
-      { model: Order, as: 'order' },
-      { model: User, as: 'waiter' },
-      { model: Product, as: 'product' }
-    ]
-  })
+  const orderDetails = await OrderDetail.findAll()
   return orderDetails
 } // Get all order details
 
 async function getOrderDetailById(orderDetailId: string) {
-  const orderDetail = await OrderDetail.findByPk(orderDetailId, {
-    include: [
-      { model: Order, as: 'order' },
-      { model: User, as: 'waiter' },
-      { model: Product, as: 'product' }
-    ]
-  })
+  const orderDetail = await OrderDetail.findByPk(orderDetailId)
   return orderDetail
 } // Get order detail by Id
 
 async function getOrderDetailsByOrderId(orderId: string) {
   const orderDetail = await OrderDetail.findAll({
-    where: { orderId },
-    include: [
-      { model: Order, as: 'order' },
-      { model: User, as: 'waiter' },
-      { model: Product, as: 'product' }
-    ]
+    where: { orderId }
   })
   return orderDetail
 } // Get order detail by Order Id
