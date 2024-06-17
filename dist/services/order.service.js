@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const uuid_1 = require("uuid");
 const order_model_1 = require("../models/order.model");
+const orderDetail_service_1 = __importDefault(require("./orderDetail.service"));
 const user_service_1 = __importDefault(require("./user.service"));
 async function getAllOrders(req) {
     const { page_index = 1, page_size = 10, status } = req.query;
@@ -31,7 +32,8 @@ async function getOrderById(orderId) {
     const order = await order_model_1.Order.findOne({ where: { id: orderId } });
     return order;
 } // Get order by Id
-async function createOrder(order) {
+async function createOrder(req) {
+    const { order, orderDetails } = req.body;
     const customer = await user_service_1.default.getUserById(order.userId);
     if (!customer) {
         throw new Error('Not found customer');
@@ -41,11 +43,15 @@ async function createOrder(order) {
         customerId: customer.id,
         date: new Date(),
         totalAmount: order.totalAmount,
-        sizes: order.sizes,
         status: 'Pending',
-        design: order.design,
         deleted: false
     });
+    const orderDetailsPromises = orderDetails.map((detail) => {
+        return orderDetail_service_1.default.createOrderDetail(result.id, detail);
+    });
+    await Promise.all(orderDetailsPromises);
+    result.status = 'Completed';
+    await result.save();
     return result;
 } // Create order
 async function updateOrder(order) {

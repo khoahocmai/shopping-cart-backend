@@ -24,19 +24,10 @@ exports.Order = database_1.default.define(tableName, {
         type: sequelize_1.DataTypes.FLOAT,
         allowNull: false
     },
-    sizes: {
-        type: sequelize_1.DataTypes.ENUM('S', 'M', 'L', 'XL', 'XXL', 'XXXL'),
-        allowNull: false,
-        defaultValue: 'S'
-    },
     status: {
         type: sequelize_1.DataTypes.ENUM('Pending', 'Completed'),
         allowNull: false,
         defaultValue: 'Pending'
-    },
-    design: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
     },
     deleted: {
         type: sequelize_1.DataTypes.BOOLEAN,

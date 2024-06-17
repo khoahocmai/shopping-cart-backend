@@ -57,6 +57,8 @@ async function createOrderDetail(orderId, orderDetail) {
         productId: orderDetail.productId,
         quantity: orderDetail.quantity,
         price: orderDetail.price,
+        sizes: orderDetail.sizes,
+        design: orderDetail.design,
         orderTime: new Date(),
         deleted: false
     });

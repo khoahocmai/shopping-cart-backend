@@ -31,8 +31,7 @@ async function getOrder(req, res) {
 } // Controller Get order by Id
 async function createOrder(req, res) {
     try {
-        const orderData = req.body;
-        const order = await order_service_1.default.createOrder(orderData);
+        const order = await order_service_1.default.createOrder(req);
         if (!order) {
             res.json(responseStatus_1.default.MessageResponse('Error in create Order'));
         }

@@ -33,6 +33,15 @@ exports.OrderDetail = database_1.default.define(tableName, {
         allowNull: false,
         defaultValue: sequelize_1.DataTypes.NOW
     },
+    sizes: {
+        type: sequelize_1.DataTypes.ENUM('S', 'M', 'L', 'XL', 'XXL', 'XXXL'),
+        allowNull: false,
+        defaultValue: 'S'
+    },
+    design: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
     deleted: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
