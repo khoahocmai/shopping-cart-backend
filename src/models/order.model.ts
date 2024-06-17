@@ -21,20 +21,12 @@ export const Order = sequelize.define<OrderInstance>(tableName, {
     type: DataTypes.FLOAT,
     allowNull: false
   },
-  sizes: {
-    type: DataTypes.ENUM('S', 'M', 'L', 'XL', 'XXL', 'XXXL'),
-    allowNull: false,
-    defaultValue: 'S'
-  },
   status: {
     type: DataTypes.ENUM('Pending', 'Completed'),
     allowNull: false,
     defaultValue: 'Pending'
   },
-  design: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+
   deleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -48,9 +40,7 @@ export interface OrderAttributes {
   customerId: string
   date: Date
   totalAmount: number
-  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   status: 'Pending' | 'Completed'
-  design: string
   deleted: boolean
 }
 

@@ -2,9 +2,11 @@ import { Request } from 'express'
 import { Op, WhereOptions } from 'sequelize'
 import { v4 as uuidv4 } from 'uuid'
 
-import { CreateOrder, UpdateOrder } from '~/constants/type'
+import { CreateOrder, CreateOrderDetail, UpdateOrder } from '~/constants/type'
 import { Order, OrderAttributes } from '~/models/order.model'
+import { OrderDetail } from '~/models/orderDetail.model'
 
+import orderDetailService from './orderDetail.service'
 import userService from './user.service'
 
 async function getAllOrders(req: Request) {
@@ -34,7 +36,9 @@ async function getOrderById(orderId: string) {
   return order
 } // Get order by Id
 
-async function createOrder(order: CreateOrder) {
+async function createOrder(req: Request) {
+  const { order, orderDetails } = req.body as { order: CreateOrder; orderDetails: CreateOrderDetail[] }
+
   const customer = await userService.getUserById(order.userId)
   if (!customer) {
     throw new Error('Not found customer')
@@ -45,11 +49,18 @@ async function createOrder(order: CreateOrder) {
     customerId: customer.id,
     date: new Date(),
     totalAmount: order.totalAmount,
-    sizes: order.sizes,
     status: 'Pending',
-    design: order.design,
     deleted: false
   })
+
+  const orderDetailsPromises = orderDetails.map((detail) => {
+    return orderDetailService.createOrderDetail(result.id, detail)
+  })
+  await Promise.all(orderDetailsPromises)
+
+  result.status = 'Completed'
+  await result.save()
+
   return result
 } // Create order
 

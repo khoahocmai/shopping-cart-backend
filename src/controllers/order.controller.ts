@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import responseStatus from '~/constants/responseStatus'
-import { CreateOrder, UpdateOrder } from '~/constants/type'
+import { CreateOrder, CreateOrderDetail, UpdateOrder } from '~/constants/type'
 import OrderService from '~/services/order.service'
 
 async function getOrders(req: Request, res: Response) {
@@ -30,8 +30,7 @@ async function getOrder(req: Request, res: Response) {
 
 async function createOrder(req: Request, res: Response) {
   try {
-    const orderData: CreateOrder = req.body
-    const order = await OrderService.createOrder(orderData)
+    const order = await OrderService.createOrder(req)
     if (!order) {
       res.json(responseStatus.MessageResponse('Error in create Order'))
     }

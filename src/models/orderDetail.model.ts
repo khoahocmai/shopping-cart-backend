@@ -30,6 +30,15 @@ export const OrderDetail = sequelize.define<OrderDetailInstance>(tableName, {
     allowNull: false,
     defaultValue: DataTypes.NOW
   },
+  sizes: {
+    type: DataTypes.ENUM('S', 'M', 'L', 'XL', 'XXL', 'XXXL'),
+    allowNull: false,
+    defaultValue: 'S'
+  },
+  design: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   deleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -45,6 +54,8 @@ export interface OrderDetailAttributes {
   quantity: number
   price: number
   orderTime: Date
+  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  design: string
   deleted: boolean
 }
 

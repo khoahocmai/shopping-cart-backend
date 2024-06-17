@@ -40,8 +40,6 @@ export interface CreateOrder {
   userId: string
   date: Date
   totalAmount: number
-  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
-  design: string
 }
 
 export interface UpdateOrder {
@@ -54,12 +52,12 @@ export interface UpdateOrder {
 
 // Order Detail
 export interface CreateOrderDetail {
-  // orderId: string
   waiterId: string
   productId: string
   quantity: number
   price: number
-  status?: 'Cooking' | 'Served' | 'Check' | 'Finish'
+  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  design: string
 }
 
 export interface UpdateOrderDetail {
@@ -68,7 +66,8 @@ export interface UpdateOrderDetail {
   productId: string
   quantity: number
   price: number
-  orderTime: Date
+  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  design: string
 }
 
 export type Pagination = {
