@@ -51,12 +51,13 @@ async function createOrderDetail(orderId, orderDetail) {
     if (!product) {
         throw new Error('Not found product');
     }
+    const price = product.price * orderDetail.quantity;
     const result = await orderDetail_model_1.OrderDetail.create({
         id: (0, uuid_1.v4)(),
         orderId: orderId,
         productId: orderDetail.productId,
         quantity: orderDetail.quantity,
-        price: orderDetail.price,
+        price: price,
         sizes: orderDetail.sizes,
         design: orderDetail.design,
         orderTime: new Date(),

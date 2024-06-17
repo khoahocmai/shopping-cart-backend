@@ -7,7 +7,6 @@ const sequelize_1 = require("sequelize");
 const uuid_1 = require("uuid");
 const order_model_1 = require("../models/order.model");
 const orderDetail_service_1 = __importDefault(require("./orderDetail.service"));
-const user_service_1 = __importDefault(require("./user.service"));
 async function getAllOrders(req) {
     const { page_index = 1, page_size = 10, status } = req.query;
     const mapStatus = (statusNum) => {
@@ -33,16 +32,13 @@ async function getOrderById(orderId) {
     return order;
 } // Get order by Id
 async function createOrder(req) {
-    const { order, orderDetails } = req.body;
-    const customer = await user_service_1.default.getUserById(order.userId);
-    if (!customer) {
-        throw new Error('Not found customer');
-    }
+    const totalAmount = req.body.totalAmount;
+    const orderDetails = req.body.orderDetails;
+    const totalAmountNumber = parseFloat(totalAmount);
     const result = await order_model_1.Order.create({
         id: (0, uuid_1.v4)(),
-        customerId: customer.id,
         date: new Date(),
-        totalAmount: order.totalAmount,
+        totalAmount: totalAmountNumber,
         status: 'Pending',
         deleted: false
     });
@@ -50,8 +46,6 @@ async function createOrder(req) {
         return orderDetail_service_1.default.createOrderDetail(result.id, detail);
     });
     await Promise.all(orderDetailsPromises);
-    result.status = 'Completed';
-    await result.save();
     return result;
 } // Create order
 async function updateOrder(order) {
@@ -65,8 +59,7 @@ async function updateOrder(order) {
         throw new Error('Cannot update an order that is already Completed');
     }
     const updatedOrder = await order_model_1.Order.update({
-        customerId: order.customerId,
-        date: order.date,
+        date: new Date(),
         totalAmount: order.totalAmount,
         status: order.status
     }, {

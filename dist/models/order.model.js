@@ -11,10 +11,6 @@ const database_1 = __importDefault(require("../databases/database"));
 const tableName = 'order';
 exports.Order = database_1.default.define(tableName, {
     ...UUIDModel_1.default,
-    customerId: {
-        type: sequelize_1.DataTypes.UUID,
-        allowNull: false
-    },
     date: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
