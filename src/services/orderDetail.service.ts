@@ -50,7 +50,7 @@ async function createOrderDetail(orderId: string, orderDetail: CreateOrderDetail
     throw new Error('Not found order')
   }
 
-  const product = await productService.getProductById(orderDetail.productId)
+  const product = await productService.getProductById(orderDetail.id)
   if (!product) {
     throw new Error('Not found product')
   }
@@ -59,7 +59,7 @@ async function createOrderDetail(orderId: string, orderDetail: CreateOrderDetail
   const result = await OrderDetail.create({
     id: uuidv4(),
     orderId: orderId,
-    productId: orderDetail.productId,
+    productId: orderDetail.id,
     quantity: orderDetail.quantity,
     price: price,
     sizes: orderDetail.sizes,

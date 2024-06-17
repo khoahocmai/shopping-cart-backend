@@ -146,15 +146,27 @@ router.get('/', order_controller_1.default.getOrders);
  *           schema:
  *             type: object
  *             properties:
- *               totalAmount:
- *                 type: string
- *                 description: The total amount of the order
+ *               order:
+ *                 type: object
+ *                 properties:
+ *                   totalAmount:
+ *                     type: number
+ *                     description: The total amount of the order
+ *                   name:
+ *                     type: string
+ *                     description: The name of the customer
+ *                   address:
+ *                     type: string
+ *                     description: The address of the customer
+ *                   phone:
+ *                     type: string
+ *                     description: The phone number of the customer
  *               orderDetails:
  *                 type: array
  *                 items:
  *                   type: object
  *                   properties:
- *                     productId:
+ *                     id:
  *                       type: string
  *                       description: The ID of the product
  *                     quantity:

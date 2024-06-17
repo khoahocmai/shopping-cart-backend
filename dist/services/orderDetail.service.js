@@ -47,7 +47,7 @@ async function createOrderDetail(orderId, orderDetail) {
     if (!order) {
         throw new Error('Not found order');
     }
-    const product = await product_service_1.default.getProductById(orderDetail.productId);
+    const product = await product_service_1.default.getProductById(orderDetail.id);
     if (!product) {
         throw new Error('Not found product');
     }
@@ -55,7 +55,7 @@ async function createOrderDetail(orderId, orderDetail) {
     const result = await orderDetail_model_1.OrderDetail.create({
         id: (0, uuid_1.v4)(),
         orderId: orderId,
-        productId: orderDetail.productId,
+        productId: orderDetail.id,
         quantity: orderDetail.quantity,
         price: price,
         sizes: orderDetail.sizes,

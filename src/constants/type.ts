@@ -51,7 +51,7 @@ export interface UpdateOrder {
 
 // Order Detail
 export interface CreateOrderDetail {
-  productId: string
+  id: string
   quantity: number
   sizes: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   design: string
