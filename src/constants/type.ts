@@ -56,7 +56,7 @@ export interface CreateOrderDetail {
   productId: string
   quantity: number
   price: number
-  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  sizes: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   design: string
 }
 
@@ -66,7 +66,7 @@ export interface UpdateOrderDetail {
   productId: string
   quantity: number
   price: number
-  sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  sizes: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   design: string
 }
 

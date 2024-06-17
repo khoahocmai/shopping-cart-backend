@@ -15,32 +15,24 @@ const router = express.Router()
  *         id:
  *           type: string
  *           description: The order ID
- *         tableId:
- *           type: string
- *           description: The ID of the associated table
- *           required: true
  *         customerId:
  *           type: string
  *           description: The ID of the associated customer
+ *           required: true
+ *         date:
+ *           type: string
+ *           format: date-time
+ *           description: The order date and time
+ *           default: current date and time
+ *         totalAmount:
+ *           type: number
+ *           description: The total amount of the order
  *           required: true
  *         status:
  *           type: string
  *           description: The order status
  *           enum: [Pending, Completed]
  *           default: Pending
- *         date:
- *           type: string
- *           format: date-time
- *           description: The order date and time
- *           default: current date and time
- *         discountApplied:
- *           type: number
- *           description: The discount applied to the order
- *           default: 0.0
- *         totalAmount:
- *           type: number
- *           description: The total amount of the order
- *           required: true
  *         deleted:
  *           type: boolean
  *           description: The order deletion status
@@ -55,9 +47,6 @@ const router = express.Router()
  *           type: string
  *           description: The ID of the associated order
  *           required: true
- *         waiterId:
- *           type: string
- *           description: The ID of the waiter who took the order (optional)
  *         productId:
  *           type: string
  *           description: The ID of the product in the order detail
@@ -75,11 +64,15 @@ const router = express.Router()
  *           format: date-time
  *           description: The time the order detail was created
  *           default: current date and time
- *         status:
+ *         sizes:
  *           type: string
- *           description: The status of the order detail
- *           enum: [Cooking, Served, Check, Finish]
- *           default: Cooking
+ *           description: The size of the product
+ *           enum: [M, L, XL, XXL, XXXL]
+ *           default: S
+ *         design:
+ *           type: string
+ *           description: The design of the product
+ *           required: true
  *         deleted:
  *           type: boolean
  *           description: The order detail deletion status
@@ -159,14 +152,35 @@ router.get('/', OrderController.getOrders)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             type: object
+ *             properties:
+ *               order:
+ *                 $ref: '#/components/schemas/CreateOrder'
+ *               orderDetails:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/CreateOrderDetail'
  *     responses:
  *       200:
  *         description: Returns the created order
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Order'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 customerId:
+ *                   type: string
+ *                 date:
+ *                   type: string
+ *                   format: date-time
+ *                 totalAmount:
+ *                   type: number
+ *                 status:
+ *                   type: string
+ *                 deleted:
+ *                   type: boolean
  */
 router.post('/', OrderController.createOrder)
 
