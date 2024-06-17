@@ -32,14 +32,16 @@ async function getOrderById(orderId) {
     return order;
 } // Get order by Id
 async function createOrder(req) {
-    const totalAmount = req.body.totalAmount;
-    const orderDetails = req.body.orderDetails;
-    const totalAmountNumber = parseFloat(totalAmount);
+    const { order, orderDetails } = req.body;
+    const totalAmountNumber = parseFloat(order.totalAmount);
     const result = await order_model_1.Order.create({
         id: (0, uuid_1.v4)(),
         date: new Date(),
         totalAmount: totalAmountNumber,
         status: 'Pending',
+        name: order.name,
+        address: order.address,
+        phone: order.phone,
         deleted: false
     });
     const orderDetailsPromises = orderDetails.map((detail) => {

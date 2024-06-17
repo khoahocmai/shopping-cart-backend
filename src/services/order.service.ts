@@ -2,7 +2,7 @@ import { Request } from 'express'
 import { Op, WhereOptions } from 'sequelize'
 import { v4 as uuidv4 } from 'uuid'
 
-import { CreateOrderDetail, UpdateOrder } from '~/constants/type'
+import { CreateOrder, CreateOrderDetail, UpdateOrder } from '~/constants/type'
 import { Order, OrderAttributes } from '~/models/order.model'
 
 import orderDetailService from './orderDetail.service'
@@ -35,16 +35,18 @@ async function getOrderById(orderId: string) {
 } // Get order by Id
 
 async function createOrder(req: Request) {
-  const totalAmount = req.body.totalAmount as string
-  const orderDetails = req.body.orderDetails as CreateOrderDetail[]
+  const { order, orderDetails } = req.body as { order: CreateOrder; orderDetails: CreateOrderDetail[] }
 
-  const totalAmountNumber = parseFloat(totalAmount)
+  const totalAmountNumber = parseFloat(order.totalAmount)
 
   const result = await Order.create({
     id: uuidv4(),
     date: new Date(),
     totalAmount: totalAmountNumber,
     status: 'Pending',
+    name: order.name,
+    address: order.address,
+    phone: order.phone,
     deleted: false
   })
 

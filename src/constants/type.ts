@@ -36,6 +36,12 @@ export interface UpdateCustomer {
 }
 
 // Order
+export interface CreateOrder {
+  totalAmount: string
+  name: string
+  address: string
+  phone: string
+}
 
 export interface UpdateOrder {
   id: string

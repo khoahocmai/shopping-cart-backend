@@ -22,7 +22,18 @@ export const Order = sequelize.define<OrderInstance>(tableName, {
     allowNull: false,
     defaultValue: 'Pending'
   },
-
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   deleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -36,6 +47,9 @@ export interface OrderAttributes {
   date: Date
   totalAmount: number
   status: 'Pending' | 'Completed'
+  name: string
+  address: string
+  phone: string
   deleted: boolean
 }
 

@@ -25,6 +25,18 @@ exports.Order = database_1.default.define(tableName, {
         allowNull: false,
         defaultValue: 'Pending'
     },
+    name: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    address: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    phone: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
     deleted: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
