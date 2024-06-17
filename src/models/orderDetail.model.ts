@@ -33,7 +33,7 @@ export const OrderDetail = sequelize.define<OrderDetailInstance>(tableName, {
   sizes: {
     type: DataTypes.ENUM('M', 'L', 'XL', 'XXL', 'XXXL'),
     allowNull: false,
-    defaultValue: 'S'
+    defaultValue: 'M'
   },
   design: {
     type: DataTypes.STRING,
