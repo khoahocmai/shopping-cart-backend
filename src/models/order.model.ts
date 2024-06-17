@@ -8,10 +8,6 @@ const tableName = 'order'
 
 export const Order = sequelize.define<OrderInstance>(tableName, {
   ...UUIDModel,
-  customerId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
   date: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -37,7 +33,6 @@ export const Order = sequelize.define<OrderInstance>(tableName, {
 
 export interface OrderAttributes {
   id: string
-  customerId: string
   date: Date
   totalAmount: number
   status: 'Pending' | 'Completed'

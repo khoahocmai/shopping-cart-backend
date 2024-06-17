@@ -15,10 +15,6 @@ const router = express.Router()
  *         id:
  *           type: string
  *           description: The order ID
- *         customerId:
- *           type: string
- *           description: The ID of the associated customer
- *           required: true
  *         date:
  *           type: string
  *           format: date-time
@@ -55,10 +51,6 @@ const router = express.Router()
  *           type: integer
  *           description: The quantity of the product ordered
  *           default: 1
- *         price:
- *           type: number
- *           description: The price of the product
- *           required: true
  *         orderTime:
  *           type: string
  *           format: date-time
@@ -68,7 +60,7 @@ const router = express.Router()
  *           type: string
  *           description: The size of the product
  *           enum: [M, L, XL, XXL, XXXL]
- *           default: S
+ *           default: M
  *         design:
  *           type: string
  *           description: The design of the product
@@ -154,12 +146,27 @@ router.get('/', OrderController.getOrders)
  *           schema:
  *             type: object
  *             properties:
- *               order:
- *                 $ref: '#/components/schemas/CreateOrder'
+ *               totalAmount:
+ *                 type: string
+ *                 description: The total amount of the order
  *               orderDetails:
  *                 type: array
  *                 items:
- *                   $ref: '#/components/schemas/CreateOrderDetail'
+ *                   type: object
+ *                   properties:
+ *                     productId:
+ *                       type: string
+ *                       description: The ID of the product
+ *                     quantity:
+ *                       type: number
+ *                       description: The quantity of the product
+ *                     sizes:
+ *                       type: string
+ *                       enum: ['M', 'L', 'XL', 'XXL', 'XXXL']
+ *                       description: The size of the product
+ *                     design:
+ *                       type: string
+ *                       description: The design of the product
  *     responses:
  *       200:
  *         description: Returns the created order

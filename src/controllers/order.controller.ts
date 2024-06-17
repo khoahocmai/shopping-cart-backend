@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import responseStatus from '~/constants/responseStatus'
-import { CreateOrder, CreateOrderDetail, UpdateOrder } from '~/constants/type'
+import { UpdateOrder } from '~/constants/type'
 import OrderService from '~/services/order.service'
 
 async function getOrders(req: Request, res: Response) {

@@ -36,26 +36,17 @@ export interface UpdateCustomer {
 }
 
 // Order
-export interface CreateOrder {
-  userId: string
-  date: Date
-  totalAmount: number
-}
 
 export interface UpdateOrder {
   id: string
-  customerId: string
-  date: Date
   totalAmount: number
   status: 'Pending' | 'Completed'
 }
 
 // Order Detail
 export interface CreateOrderDetail {
-  waiterId: string
   productId: string
   quantity: number
-  price: number
   sizes: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   design: string
 }
