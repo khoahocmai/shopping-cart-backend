@@ -73,10 +73,19 @@ async function deleteOrder(orderId) {
     const result = await order_model_1.Order.update({ deleted: true }, { where: { id: orderId } });
     return result;
 } // Delete order
+async function calculateTotalCompletedOrders() {
+    const completedOrders = await order_model_1.Order.findAll({ where: { status: 'Completed' } });
+    let totalAmount = 0;
+    completedOrders.forEach((order) => {
+        totalAmount += order.totalAmount;
+    });
+    return totalAmount;
+} // Calculate total completed orders
 exports.default = {
     getAllOrders,
     getOrderById,
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    calculateTotalCompletedOrders
 };

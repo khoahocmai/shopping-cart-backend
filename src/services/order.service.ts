@@ -89,10 +89,22 @@ async function deleteOrder(orderId: string) {
   return result
 } // Delete order
 
+async function calculateTotalCompletedOrders() {
+  const completedOrders = await Order.findAll({ where: { status: 'Completed' } })
+  let totalAmount = 0
+
+  completedOrders.forEach((order) => {
+    totalAmount += order.totalAmount
+  })
+
+  return totalAmount
+} // Calculate total completed orders
+
 export default {
   getAllOrders,
   getOrderById,
   createOrder,
   updateOrder,
-  deleteOrder
+  deleteOrder,
+  calculateTotalCompletedOrders
 }

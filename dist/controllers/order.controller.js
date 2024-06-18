@@ -76,10 +76,21 @@ async function deleteOrder(req, res) {
         res.json(responseStatus_1.default.InternalErrorResponse(error.message));
     }
 } // Controller Delete order
+async function calculateTotalCompletedOrders(req, res) {
+    try {
+        const totalOrders = await order_service_1.default.calculateTotalCompletedOrders();
+        res.json(responseStatus_1.default.DataResponse('Get total amount order', totalOrders));
+    }
+    catch (error) {
+        console.log(error);
+        res.json(responseStatus_1.default.InternalErrorResponse(error.message));
+    }
+}
 exports.default = {
     getOrders,
     getOrder,
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    calculateTotalCompletedOrders
 };

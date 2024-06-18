@@ -205,6 +205,26 @@ router.post('/', OrderController.createOrder)
 
 /**
  * @swagger
+ * /api/orders/total-amount:
+ *   get:
+ *     tags:
+ *       - order
+ *     summary: Get the total amount of all completed orders
+ *     responses:
+ *       200:
+ *         description: Returns the total amount of all completed orders
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalAmount:
+ *                   type: number
+ */
+router.get('/total-amount', OrderController.calculateTotalCompletedOrders)
+
+/**
+ * @swagger
  * /api/orders/{id}:
  *   get:
  *     tags:
