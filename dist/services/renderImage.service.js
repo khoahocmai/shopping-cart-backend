@@ -65,6 +65,7 @@ async function generateImageFromPrompt(data) {
     }));
     return (0, util_format_url_1.formatUrl)(presignedObj);
 }
+// Comment to push
 exports.default = {
     generateImageFromPrompt
 };

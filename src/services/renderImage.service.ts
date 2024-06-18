@@ -71,6 +71,7 @@ async function generateImageFromPrompt(data: { inputs: string }): Promise<string
   )
   return formatUrl(presignedObj)
 }
+// Comment to push
 
 export default {
   generateImageFromPrompt
