@@ -59,6 +59,7 @@ async function createProduct(productData: ProductAttributes) {
     previousPrice: productData.previousPrice,
     status: productData.status,
     imageUrl: productData.imageUrl,
+    category: productData.category,
     deleted: productData.deleted
   })
   return product

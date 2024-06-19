@@ -40,6 +40,11 @@ exports.Product = database_1.default.define(tableName, {
         allowNull: true,
         unique: false
     },
+    category: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+        unique: false
+    },
     deleted: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
