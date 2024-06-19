@@ -75,6 +75,9 @@ async function updateOrder(order: UpdateOrder) {
     {
       date: new Date(),
       totalAmount: order.totalAmount,
+      name: order.name,
+      address: order.address,
+      phone: order.phone,
       status: order.status
     },
     {

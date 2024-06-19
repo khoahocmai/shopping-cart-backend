@@ -46,10 +46,10 @@ export interface OrderAttributes {
   id: string
   date: Date
   totalAmount: number
-  status: 'Pending' | 'Completed'
   name: string
   address: string
   phone: string
+  status: 'Pending' | 'Completed'
   deleted: boolean
 }
 

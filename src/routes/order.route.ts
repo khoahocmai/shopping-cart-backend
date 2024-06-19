@@ -266,7 +266,23 @@ router.get('/:id', OrderController.getOrder)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             type: object
+ *             properties:
+ *               order:
+ *                 type: object
+ *                 properties:
+ *                   totalAmount:
+ *                     type: number
+ *                     description: The total amount of the order
+ *                   name:
+ *                     type: string
+ *                     description: The name of the customer
+ *                   address:
+ *                     type: string
+ *                     description: The address of the customer
+ *                   phone:
+ *                     type: string
+ *                     description: The phone number of the customer
  *     responses:
  *       200:
  *         description: Returns the updated order

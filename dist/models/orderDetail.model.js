@@ -38,10 +38,6 @@ exports.OrderDetail = database_1.default.define(tableName, {
         allowNull: false,
         defaultValue: 'M'
     },
-    design: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
     deleted: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,

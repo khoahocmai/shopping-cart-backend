@@ -46,7 +46,6 @@ async function createOrderDetail(orderId: string, orderDetail: CreateOrderDetail
     quantity: orderDetail.quantity,
     price: price,
     sizes: orderDetail.sizes,
-    design: orderDetail.design,
     orderTime: new Date(),
     deleted: false
   })

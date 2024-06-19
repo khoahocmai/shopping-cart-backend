@@ -46,6 +46,9 @@ export interface CreateOrder {
 export interface UpdateOrder {
   id: string
   totalAmount: number
+  name: string
+  address: string
+  phone: string
   status: 'Pending' | 'Completed'
 }
 
@@ -54,7 +57,6 @@ export interface CreateOrderDetail {
   id: string
   quantity: number
   sizes: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
-  design: string
 }
 
 export interface UpdateOrderDetail {

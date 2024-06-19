@@ -63,6 +63,9 @@ async function updateOrder(order) {
     const updatedOrder = await order_model_1.Order.update({
         date: new Date(),
         totalAmount: order.totalAmount,
+        name: order.name,
+        address: order.address,
+        phone: order.phone,
         status: order.status
     }, {
         where: { id: order.id }

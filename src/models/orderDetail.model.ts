@@ -35,10 +35,6 @@ export const OrderDetail = sequelize.define<OrderDetailInstance>(tableName, {
     allowNull: false,
     defaultValue: 'M'
   },
-  design: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   deleted: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -55,7 +51,6 @@ export interface OrderDetailAttributes {
   price: number
   orderTime: Date
   sizes: 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
-  design: string
   deleted: boolean
 }
 
