@@ -5,9 +5,10 @@ import { Hash } from '@smithy/hash-node'
 import { HttpRequest } from '@smithy/protocol-http'
 import { parseUrl } from '@smithy/url-parser'
 import dotenv from 'dotenv'
+import { v4 as uuidv4 } from 'uuid'
 
 import s3 from '~/configs/s3.config'
-import userService from '~/services/user.service'
+import { ImageAIRender } from '~/models/imageAIRender.model'
 
 import productService from './product.service'
 dotenv.config()
@@ -93,6 +94,63 @@ async function getFileClothesFromS3(productId: string): Promise<string> {
   }
 } // Get image food from S3
 
+async function uploadAIImageToS3(file: Express.Multer.File): Promise<void> {
+  try {
+    if (!file) {
+      throw new Error('Not found File')
+    }
+    if (!isImageFile(file)) {
+      throw new Error('Invalid file format. Only image files are allowed.')
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      throw new Error('File size exceeds the maximum limit of 5MB.')
+    }
+    const fileName = `Image_${Date.now().toString()}`
+    const params = {
+      Bucket: bucketName,
+      Key: fileName,
+      Body: file.buffer,
+      ContentType: file.mimetype
+    }
+    const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
+    await ImageAIRender.create({ id: uuidv4(), date: new Date(), imageUrl: image, deleted: false })
+
+    await s3.send(new PutObjectCommand(params))
+    return Promise.resolve()
+  } catch (error) {
+    console.error('Error uploading file:', error)
+    return Promise.reject(error)
+  }
+} // Upload image food to S3 AWS
+
+async function getFileAIImageFromS3(id: string): Promise<string> {
+  try {
+    const aiImage = await ImageAIRender.findOne({ where: { id } })
+    if (!aiImage) {
+      throw new Error('Not found')
+    }
+    const url = parseUrl(aiImage.imageUrl)
+    const s3Presigner = new S3RequestPresigner({
+      region: bucketRegion,
+      credentials: {
+        accessKeyId: bucketAccessKey,
+        secretAccessKey: bucketSecretAccessKey
+      },
+      sha256: Hash.bind(null, 'sha256')
+    })
+    const presignedObj = await s3Presigner.presign(
+      new HttpRequest({
+        ...url,
+        method: 'GET'
+      })
+    )
+    return formatUrl(presignedObj)
+  } catch (error) {
+    console.error('Error get file:', error)
+    throw error
+  }
+} // Get image food from S3
+
 async function deleteFileFromS3(fileName: string): Promise<void> {
   try {
     const params = {
@@ -116,5 +174,7 @@ function isImageFile(file: Express.Multer.File): boolean {
 export default {
   uploadImageClothesToS3,
   getFileClothesFromS3,
+  uploadAIImageToS3,
+  getFileAIImageFromS3,
   deleteFileFromS3
 }

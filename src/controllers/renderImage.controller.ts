@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 
 import responseStatus from '~/constants/responseStatus'
+import MediaService from '~/services/media.service'
 
-import imageService from '../services/renderImage.service'
+import ImageService from '../services/renderImage.service'
 
 async function generateImage(req: Request, res: Response): Promise<void> {
   try {
@@ -12,7 +13,7 @@ async function generateImage(req: Request, res: Response): Promise<void> {
       res.status(400).send('Prompt is required')
       return
     }
-    const url = await imageService.generateImageFromPrompt({ inputs: prompt })
+    const url = await ImageService.generateImageFromPrompt({ inputs: prompt })
     res.json(responseStatus.DataResponse('', url))
   } catch (error: any) {
     console.error('Error generating image:', error.message)
@@ -20,6 +21,39 @@ async function generateImage(req: Request, res: Response): Promise<void> {
   }
 }
 
+async function uploadAIImage(req: Request, res: Response): Promise<void> {
+  try {
+    const file = req.file
+    if (!file) {
+      res.json(responseStatus.MissingFieldResponse('No file uploaded'))
+      return
+    }
+
+    const result = await MediaService.uploadAIImageToS3(file)
+    res.json(responseStatus.CreateSuccessResponse('Upload image success', result))
+  } catch (error: string | any) {
+    res.json(responseStatus.InternalErrorResponse(error.message))
+  }
+} // Controller Upload image clothes to S3 AWS
+
+async function getAIImageUrl(req: Request, res: Response): Promise<void> {
+  try {
+    const { id } = req.params
+    if (!id) {
+      res.json(responseStatus.MissingFieldResponse('AI Image is required'))
+      return
+    }
+
+    const url = await MediaService.getFileAIImageFromS3(id)
+    res.json(responseStatus.DataResponse('', url))
+  } catch (error: string | any) {
+    console.error(error)
+    res.json(responseStatus.InternalErrorResponse(error.message))
+  }
+} // Controller Get image clothes URL from S3 AWS
+
 export default {
-  generateImage
+  generateImage,
+  uploadAIImage,
+  getAIImageUrl
 }
