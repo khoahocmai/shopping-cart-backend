@@ -13,6 +13,9 @@ async function generateImageFromPrompt(data) {
     const arrayBuffer = await response.arrayBuffer();
     const base64Image = buffer_1.Buffer.from(arrayBuffer).toString('base64');
     return 'data:image/png;base64,' + base64Image;
+    // const blob = await response.blob()
+    // const objectURL = URL.createObjectURL(blob)
+    // return objectURL
 }
 // ahsd
 exports.default = {

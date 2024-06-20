@@ -55,7 +55,7 @@ router.post('/image', renderImage_controller_1.default.generateImage);
  *   post:
  *     tags:
  *       - RenderImage
- *     summary: Upload an AI image to S3
+ *     summary: Upload an image to S3
  *     requestBody:
  *       required: true
  *       content:
