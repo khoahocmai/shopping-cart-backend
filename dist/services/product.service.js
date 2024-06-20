@@ -23,6 +23,10 @@ async function getAllProducts(req) {
         limit: Number(page_size),
         offset: (Number(page_index) - 1) * Number(page_size)
     });
+    const productsWithStt = products.map((product, index) => ({
+        ...product.get({ plain: true }),
+        stt: (Number(page_index) - 1) * Number(page_size) + index + 1
+    }));
     const totalPage = Math.ceil(count / Number(page_size));
     const pagination = {
         pageSize: Number(page_size),
@@ -31,7 +35,7 @@ async function getAllProducts(req) {
         maxPageSize: 100,
         totalPage: totalPage
     };
-    return { products: products, pagination: pagination };
+    return { products: productsWithStt, pagination: pagination };
 }
 async function getProductById(id) {
     const product = await product_model_1.Product.findByPk(id);

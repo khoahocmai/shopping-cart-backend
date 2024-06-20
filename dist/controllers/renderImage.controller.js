@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const responseStatus_1 = __importDefault(require("../constants/responseStatus"));
+const media_service_1 = __importDefault(require("../services/media.service"));
 const renderImage_service_1 = __importDefault(require("../services/renderImage.service"));
 async function generateImage(req, res) {
     try {
@@ -20,6 +21,37 @@ async function generateImage(req, res) {
         res.status(500).send('Error generating image');
     }
 }
+async function uploadAIImage(req, res) {
+    try {
+        const file = req.file;
+        if (!file) {
+            res.json(responseStatus_1.default.MissingFieldResponse('No file uploaded'));
+            return;
+        }
+        const result = await media_service_1.default.uploadAIImageToS3(file);
+        res.json(responseStatus_1.default.CreateSuccessResponse('Upload image success', result));
+    }
+    catch (error) {
+        res.json(responseStatus_1.default.InternalErrorResponse(error.message));
+    }
+} // Controller Upload image clothes to S3 AWS
+async function getAIImageUrl(req, res) {
+    try {
+        const { id } = req.params;
+        if (!id) {
+            res.json(responseStatus_1.default.MissingFieldResponse('AI Image is required'));
+            return;
+        }
+        const url = await media_service_1.default.getFileAIImageFromS3(id);
+        res.json(responseStatus_1.default.DataResponse('', url));
+    }
+    catch (error) {
+        console.error(error);
+        res.json(responseStatus_1.default.InternalErrorResponse(error.message));
+    }
+} // Controller Get image clothes URL from S3 AWS
 exports.default = {
-    generateImage
+    generateImage,
+    uploadAIImage,
+    getAIImageUrl
 };

@@ -10,8 +10,12 @@ const order_service_1 = __importDefault(require("./order.service"));
 const product_service_1 = __importDefault(require("./product.service"));
 async function getAllOrderDetails() {
     const orderDetails = await orderDetail_model_1.OrderDetail.findAll();
-    return orderDetails;
-} // Get all order details
+    const orderDetailsWithStt = orderDetails.map((orderDetail, index) => {
+        const plainOrderDetail = orderDetail.get({ plain: true });
+        return { ...plainOrderDetail, stt: index + 1 };
+    });
+    return orderDetailsWithStt;
+}
 async function getOrderDetailById(orderDetailId) {
     const orderDetail = await orderDetail_model_1.OrderDetail.findByPk(orderDetailId);
     return orderDetail;
