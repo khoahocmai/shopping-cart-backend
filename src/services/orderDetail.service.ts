@@ -1,10 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import { CreateOrderDetail, UpdateOrderDetail } from '~/constants/type'
-import { Order } from '~/models/order.model'
 import { OrderDetail } from '~/models/orderDetail.model'
-import { Product } from '~/models/product.model'
-import { User } from '~/models/user.model'
 
 // Assuming you have services for Order and Product
 import orderService from './order.service'
@@ -12,8 +9,14 @@ import productService from './product.service'
 
 async function getAllOrderDetails() {
   const orderDetails = await OrderDetail.findAll()
-  return orderDetails
-} // Get all order details
+
+  const orderDetailsWithStt = orderDetails.map((orderDetail, index) => {
+    const plainOrderDetail = orderDetail.get({ plain: true })
+    return { ...plainOrderDetail, stt: index + 1 }
+  })
+
+  return orderDetailsWithStt
+}
 
 async function getOrderDetailById(orderDetailId: string) {
   const orderDetail = await OrderDetail.findByPk(orderDetailId)

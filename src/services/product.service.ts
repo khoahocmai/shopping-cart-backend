@@ -27,6 +27,11 @@ async function getAllProducts(req: Request) {
     offset: (Number(page_index) - 1) * Number(page_size)
   })
 
+  const productsWithStt = products.map((product, index) => ({
+    ...product.get({ plain: true }),
+    stt: (Number(page_index) - 1) * Number(page_size) + index + 1
+  }))
+
   const totalPage = Math.ceil(count / Number(page_size))
   const pagination = {
     pageSize: Number(page_size),
@@ -36,7 +41,7 @@ async function getAllProducts(req: Request) {
     totalPage: totalPage
   }
 
-  return { products: products, pagination: pagination }
+  return { products: productsWithStt, pagination: pagination }
 }
 
 async function getProductById(id: string) {
