@@ -48,6 +48,33 @@ const router = Router()
  */
 router.post('/image', RenderImageController.generateImage)
 
+/**
+ * @swagger
+ * /api/renders/upload/:
+ *   post:
+ *     tags:
+ *       - RenderImage
+ *     summary: Upload an AI image to S3
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *             required:
+ *               - file
+ *     responses:
+ *       200:
+ *         description: The user avatar was successfully uploaded
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
 router.post('/upload', RenderImageController.uploadAIImage)
 
 router.get('/image/:id', RenderImageController.getAIImageUrl)
