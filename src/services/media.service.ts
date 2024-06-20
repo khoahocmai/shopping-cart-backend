@@ -170,7 +170,7 @@ function isImageFile(file: Express.Multer.File): boolean {
   const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase()
   return fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif'
 } // Check file is good format
-
+//commit for push
 export default {
   uploadImageClothesToS3,
   getFileClothesFromS3,
