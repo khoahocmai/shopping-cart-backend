@@ -77,6 +77,6 @@ router.post('/image', RenderImageController.generateImage)
  */
 router.post('/upload', RenderImageController.uploadAIImage)
 
-router.get('/image/:id', RenderImageController.getAIImageUrl)
+router.get('/image/:id', RenderImageController.getAIImageUrl) // ahsd
 
 export default router
