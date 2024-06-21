@@ -20,12 +20,9 @@ const router = (0, express_1.Router)();
  *           schema:
  *             type: object
  *             properties:
- *               order:
- *                 type: object
- *                 properties:
- *                   imageUrl:
- *                     type: string
- *                     description: The image URL
+ *               imageUrl:
+ *                 type: string
+ *                 description: The image URL
  *     responses:
  *       200:
  *         description: The user avatar was successfully uploaded
