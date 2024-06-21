@@ -8,6 +8,35 @@ const renderImage_controller_1 = __importDefault(require("../controllers/renderI
 const router = (0, express_1.Router)();
 /**
  * @swagger
+ * /api/renders/:
+ *   post:
+ *     tags:
+ *       - RenderImage
+ *     summary: Create an AI image
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               order:
+ *                 type: object
+ *                 properties:
+ *                   imageUrl:
+ *                     type: string
+ *                     description: The image URL
+ *     responses:
+ *       200:
+ *         description: The user avatar was successfully uploaded
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/', renderImage_controller_1.default.createAIImage);
+/**
+ * @swagger
  * /api/renders/image:
  *   post:
  *     tags:
@@ -49,33 +78,5 @@ const router = (0, express_1.Router)();
  *               type: string
  */
 router.post('/image', renderImage_controller_1.default.generateImage);
-/**
- * @swagger
- * /api/renders/upload/:
- *   post:
- *     tags:
- *       - RenderImage
- *     summary: Upload an image to S3
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               file:
- *                 type: string
- *                 format: binary
- *             required:
- *               - file
- *     responses:
- *       200:
- *         description: The user avatar was successfully uploaded
- *       400:
- *         description: Bad request
- *       500:
- *         description: Internal server error
- */
-router.post('/upload', renderImage_controller_1.default.uploadAIImage);
-router.get('/image/:id', renderImage_controller_1.default.getAIImageUrl); // ahsd
+// router.get('/image/:id', RenderImageController.getAIImageUrl)
 exports.default = router;

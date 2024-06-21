@@ -5,7 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_s3_1 = require("@aws-sdk/client-s3");
 const buffer_1 = require("buffer");
+const uuid_1 = require("uuid");
 const s3_config_1 = __importDefault(require("../configs/s3.config"));
+const imageAIRender_model_1 = require("../models/imageAIRender.model");
 if (!process.env.AWS_ACCESS_KEY_ID ||
     !process.env.AWS_SECRET_ACCESS_KEY ||
     !process.env.AWS_S3_BUCKET ||
@@ -61,6 +63,16 @@ async function generateImageFromPrompt(data) {
     // return formatUrl(presignedObj)
     return image;
 }
+async function createAIImage(imageUrl) {
+    const aiImage = await imageAIRender_model_1.ImageAIRender.create({
+        id: (0, uuid_1.v4)(),
+        date: new Date(),
+        imageUrl,
+        deleted: false
+    });
+    return aiImage;
+} // Create AI image
 exports.default = {
-    generateImageFromPrompt
+    generateImageFromPrompt,
+    createAIImage
 };

@@ -21,15 +21,15 @@ async function generateImage(req: Request, res: Response): Promise<void> {
   }
 }
 
-async function uploadAIImage(req: Request, res: Response): Promise<void> {
+async function createAIImage(req: Request, res: Response): Promise<void> {
   try {
-    const file = req.file
-    if (!file) {
-      res.json(responseStatus.MissingFieldResponse('No file uploaded'))
+    const imageUrl = req.body.imageUrl
+    if (!imageUrl) {
+      res.json(responseStatus.MissingFieldResponse('No imageUrl found'))
       return
     }
 
-    const result = await MediaService.uploadAIImageToS3(file)
+    const result = await ImageService.createAIImage(imageUrl)
     res.json(responseStatus.CreateSuccessResponse('Upload image success', result))
   } catch (error: string | any) {
     res.json(responseStatus.InternalErrorResponse(error.message))
@@ -54,6 +54,6 @@ async function getAIImageUrl(req: Request, res: Response): Promise<void> {
 
 export default {
   generateImage,
-  uploadAIImage,
+  createAIImage,
   getAIImageUrl
 }

@@ -73,6 +73,17 @@ async function generateImageFromPrompt(data: { inputs: string }): Promise<string
   return image
 }
 
+async function createAIImage(imageUrl: string) {
+  const aiImage = await ImageAIRender.create({
+    id: uuidv4(),
+    date: new Date(),
+    imageUrl,
+    deleted: false
+  })
+  return aiImage
+} // Create AI image
+
 export default {
-  generateImageFromPrompt
+  generateImageFromPrompt,
+  createAIImage
 }

@@ -6,6 +6,36 @@ const router = Router()
 
 /**
  * @swagger
+ * /api/renders/:
+ *   post:
+ *     tags:
+ *       - RenderImage
+ *     summary: Create an AI image
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               order:
+ *                 type: object
+ *                 properties:
+ *                   imageUrl:
+ *                     type: string
+ *                     description: The image URL
+ *     responses:
+ *       200:
+ *         description: The user avatar was successfully uploaded
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/', RenderImageController.createAIImage)
+
+/**
+ * @swagger
  * /api/renders/image:
  *   post:
  *     tags:
@@ -48,35 +78,6 @@ const router = Router()
  */
 router.post('/image', RenderImageController.generateImage)
 
-/**
- * @swagger
- * /api/renders/upload/:
- *   post:
- *     tags:
- *       - RenderImage
- *     summary: Upload an image to S3
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               file:
- *                 type: string
- *                 format: binary
- *             required:
- *               - file
- *     responses:
- *       200:
- *         description: The user avatar was successfully uploaded
- *       400:
- *         description: Bad request
- *       500:
- *         description: Internal server error
- */
-router.post('/upload', RenderImageController.uploadAIImage)
-
-router.get('/image/:id', RenderImageController.getAIImageUrl) // ahsd
+// router.get('/image/:id', RenderImageController.getAIImageUrl)
 
 export default router

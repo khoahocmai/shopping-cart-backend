@@ -21,14 +21,14 @@ async function generateImage(req, res) {
         res.status(500).send('Error generating image');
     }
 }
-async function uploadAIImage(req, res) {
+async function createAIImage(req, res) {
     try {
-        const file = req.file;
-        if (!file) {
-            res.json(responseStatus_1.default.MissingFieldResponse('No file uploaded'));
+        const imageUrl = req.body.imageUrl;
+        if (!imageUrl) {
+            res.json(responseStatus_1.default.MissingFieldResponse('No imageUrl found'));
             return;
         }
-        const result = await media_service_1.default.uploadAIImageToS3(file);
+        const result = await renderImage_service_1.default.createAIImage(imageUrl);
         res.json(responseStatus_1.default.CreateSuccessResponse('Upload image success', result));
     }
     catch (error) {
@@ -52,6 +52,6 @@ async function getAIImageUrl(req, res) {
 } // Controller Get image clothes URL from S3 AWS
 exports.default = {
     generateImage,
-    uploadAIImage,
+    createAIImage,
     getAIImageUrl
 };
