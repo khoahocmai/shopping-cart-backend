@@ -36,7 +36,7 @@ async function generateImageFromPrompt(data: { inputs: string }): Promise<string
     method: 'POST',
     body: JSON.stringify(data)
   })
-  const fileName = `Image_${Date.now().toString()}`
+  const fileName = `Image_${Date.now().toString()}.jpg`
 
   const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
 

@@ -28,7 +28,7 @@ async function generateImageFromPrompt(data) {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    const fileName = `Image_${Date.now().toString()}`;
+    const fileName = `Image_${Date.now().toString()}.jpg`;
     const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
     // const url = parseUrl(imageAIRender.imageUrl)
     // const s3Presigner = new S3RequestPresigner({
