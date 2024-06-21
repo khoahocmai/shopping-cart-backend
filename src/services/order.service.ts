@@ -26,7 +26,12 @@ async function getAllOrders(req: Request) {
     limit: Number(page_size),
     offset: (Number(page_index) - 1) * Number(page_size)
   })
-  return orders
+  const orderDetailsWithStt = orders.map((order, index) => {
+    const plainOrderDetail = order.get({ plain: true })
+    return { ...plainOrderDetail, stt: index + 1 }
+  })
+
+  return orderDetailsWithStt
 } // Get all orders
 
 async function getOrderById(orderId: string) {
