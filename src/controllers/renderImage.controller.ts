@@ -6,16 +6,24 @@ import MediaService from '~/services/media.service'
 import ImageService from '../services/renderImage.service'
 
 async function generateImage(req: Request, res: Response): Promise<void> {
+  // try {
+  //   const { prompt } = req.body
+
+  //   if (!prompt) {
+  //     res.status(400).send('Prompt is required')
+  //     return
+  //   }
+  //   const url = await ImageService.generateImageFromPrompt({ inputs: prompt })
+  //   res.json(responseStatus.DataResponse('', url))
+  // } catch (error: any) {
+  //   console.error('Error generating image:', error.message)
+  //   res.status(500).send('Error generating image')
+  // }
   try {
     const { prompt } = req.body
-
-    if (!prompt) {
-      res.status(400).send('Prompt is required')
-      return
-    }
-    const url = await ImageService.generateImageFromPrompt({ inputs: prompt })
-    res.json(responseStatus.DataResponse('', url))
-  } catch (error: any) {
+    const imageUrl = await ImageService.generateImageFromPrompt(prompt)
+    res.json(responseStatus.DataResponse('', imageUrl))
+  } catch (error: string | any) {
     console.error('Error generating image:', error.message)
     res.status(500).send('Error generating image')
   }

@@ -7,14 +7,22 @@ const responseStatus_1 = __importDefault(require("../constants/responseStatus"))
 const media_service_1 = __importDefault(require("../services/media.service"));
 const renderImage_service_1 = __importDefault(require("../services/renderImage.service"));
 async function generateImage(req, res) {
+    // try {
+    //   const { prompt } = req.body
+    //   if (!prompt) {
+    //     res.status(400).send('Prompt is required')
+    //     return
+    //   }
+    //   const url = await ImageService.generateImageFromPrompt({ inputs: prompt })
+    //   res.json(responseStatus.DataResponse('', url))
+    // } catch (error: any) {
+    //   console.error('Error generating image:', error.message)
+    //   res.status(500).send('Error generating image')
+    // }
     try {
         const { prompt } = req.body;
-        if (!prompt) {
-            res.status(400).send('Prompt is required');
-            return;
-        }
-        const url = await renderImage_service_1.default.generateImageFromPrompt({ inputs: prompt });
-        res.json(responseStatus_1.default.DataResponse('', url));
+        const imageUrl = await renderImage_service_1.default.generateImageFromPrompt(prompt);
+        res.json(responseStatus_1.default.DataResponse('', imageUrl));
     }
     catch (error) {
         console.error('Error generating image:', error.message);
