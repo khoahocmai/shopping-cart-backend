@@ -21,6 +21,7 @@ const bucketName = process.env.AWS_S3_BUCKET;
 const bucketRegion = process.env.AWS_REGION;
 async function generateImageFromPrompt(data) {
     const fetch = (await import('node-fetch')).default;
+    // Gọi API để tạo ảnh
     const response = await fetch('https://api-inference.huggingface.co/models/CompVis/stable-diffusion-v1-4', {
         headers: {
             Authorization: `Bearer ${process.env.HF_ACCESS_TOKEN}`
@@ -28,34 +29,26 @@ async function generateImageFromPrompt(data) {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    const fileName = `Image_${Date.now().toString()}.jpg`;
-    const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
-    // const url = parseUrl(imageAIRender.imageUrl)
-    // const s3Presigner = new S3RequestPresigner({
-    //   region: bucketRegion,
-    //   credentials: {
-    //     accessKeyId: bucketAccessKey,
-    //     secretAccessKey: bucketSecretAccessKey
-    //   },
-    //   sha256: Hash.bind(null, 'sha256')
-    // })
-    // const presignedObj = await s3Presigner.presign(
-    //   new HttpRequest({
-    //     ...url,
-    //     method: 'GET'
-    //   })
-    // )
-    // return formatUrl(presignedObj)
+    if (!response.ok) {
+        throw new Error(`Failed to generate image: ${response.statusText}`);
+    }
     const blob = await response.blob();
-    const file = buffer_1.Buffer.from(await blob.arrayBuffer());
+    const arrayBuffer = await blob.arrayBuffer();
+    const buffer = buffer_1.Buffer.from(arrayBuffer);
+    // Tạo tên tệp và URL
+    const fileName = `Image_${Date.now().toString()}.jpg`;
+    const imageUrl = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
+    // Cấu hình params cho S3
     const params = {
         Bucket: bucketName,
         Key: fileName,
-        Body: file,
-        ContentType: 'image/png'
+        Body: buffer,
+        ContentType: 'image/jpeg' // Đảm bảo rằng đây là loại nội dung phù hợp
     };
+    // Đẩy tệp lên S3
     await s3_config_1.default.send(new client_s3_1.PutObjectCommand(params));
-    return image;
+    // Trả về URL của ảnh
+    return imageUrl;
 }
 async function createAIImage(imageUrl) {
     const aiImage = await imageAIRender_model_1.ImageAIRender.create({
