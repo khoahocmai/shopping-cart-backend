@@ -50,16 +50,6 @@ const upload = (0, multer_1.default)();
  *         - status
  *         - imageUrl
  *         - deleted
- *     File:
- *       type: object
- *       required:
- *         - file
- *       properties:
- *         file:
- *           type: string
- *           description: The file to upload
- *       example:
- *         file: file
  */
 /**
  * @swagger
@@ -242,7 +232,13 @@ router.get('/image/:id', media_controller_1.default.getImageClothesUrl);
  *       content:
  *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/File'
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *             required:
+ *               - file
  *     responses:
  *       200:
  *         description: The product image was successfully uploaded

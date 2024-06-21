@@ -45,31 +45,32 @@ async function generateImageFromPrompt(data: { inputs: string }): Promise<string
     ContentType: 'image/png'
   }
   const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
-  const imageAIRender = await ImageAIRender.create({
-    id: uuidv4(),
-    date: new Date(),
-    imageUrl: image,
-    deleted: false
-  })
+  // const imageAIRender = await ImageAIRender.create({
+  //   id: uuidv4(),
+  //   date: new Date(),
+  //   imageUrl: image,
+  //   deleted: false
+  // })
 
   await s3.send(new PutObjectCommand(params))
 
-  const url = parseUrl(imageAIRender.imageUrl)
-  const s3Presigner = new S3RequestPresigner({
-    region: bucketRegion,
-    credentials: {
-      accessKeyId: bucketAccessKey,
-      secretAccessKey: bucketSecretAccessKey
-    },
-    sha256: Hash.bind(null, 'sha256')
-  })
-  const presignedObj = await s3Presigner.presign(
-    new HttpRequest({
-      ...url,
-      method: 'GET'
-    })
-  )
-  return formatUrl(presignedObj)
+  // const url = parseUrl(imageAIRender.imageUrl)
+  // const s3Presigner = new S3RequestPresigner({
+  //   region: bucketRegion,
+  //   credentials: {
+  //     accessKeyId: bucketAccessKey,
+  //     secretAccessKey: bucketSecretAccessKey
+  //   },
+  //   sha256: Hash.bind(null, 'sha256')
+  // })
+  // const presignedObj = await s3Presigner.presign(
+  //   new HttpRequest({
+  //     ...url,
+  //     method: 'GET'
+  //   })
+  // )
+  // return formatUrl(presignedObj)
+  return image
 }
 
 export default {

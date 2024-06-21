@@ -8,12 +8,11 @@ const media_service_1 = __importDefault(require("../services/media.service"));
 async function uploadImageClothes(req, res) {
     try {
         const file = req.file;
-        const productId = req.body.productId;
         if (!file) {
             res.json(responseStatus_1.default.MissingFieldResponse('No file uploaded'));
             return;
         }
-        const result = await media_service_1.default.uploadImageClothesToS3(productId, file);
+        const result = await media_service_1.default.uploadImageClothesToS3(file);
         res.json(responseStatus_1.default.CreateSuccessResponse('Upload image success', result));
     }
     catch (error) {

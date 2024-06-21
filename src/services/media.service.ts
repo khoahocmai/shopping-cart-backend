@@ -28,12 +28,8 @@ const bucketSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
 const bucketName = process.env.AWS_S3_BUCKET
 const bucketRegion = process.env.AWS_REGION
 
-async function uploadImageClothesToS3(productId: string, file: Express.Multer.File): Promise<void> {
+async function uploadImageClothesToS3(file: Express.Multer.File): Promise<string> {
   try {
-    const product = await productService.getProductById(productId)
-    if (!product) {
-      throw new Error('Not found Product')
-    }
     if (!file) {
       throw new Error('Not found File')
     }
@@ -44,11 +40,6 @@ async function uploadImageClothesToS3(productId: string, file: Express.Multer.Fi
       throw new Error('File size exceeds the maximum limit of 5MB.')
     }
     const fileName = `Image_${Date.now().toString()}_${file.mimetype.split('/')[1]}`
-    if (product.imageUrl) {
-      const parts = product.imageUrl.split('/')
-      const fileNameAWS = parts[parts.length - 1]
-      await deleteFileFromS3(fileNameAWS)
-    }
     const params = {
       Bucket: bucketName,
       Key: fileName,
@@ -56,10 +47,9 @@ async function uploadImageClothesToS3(productId: string, file: Express.Multer.Fi
       ContentType: file.mimetype
     }
     const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
-    product.imageUrl = image
-    await productService.updateProduct(product)
+
     await s3.send(new PutObjectCommand(params))
-    return Promise.resolve()
+    return image
   } catch (error) {
     console.error('Error uploading file:', error)
     return Promise.reject(error)
@@ -94,7 +84,7 @@ async function getFileClothesFromS3(productId: string): Promise<string> {
   }
 } // Get image food from S3
 
-async function uploadAIImageToS3(file: Express.Multer.File): Promise<void> {
+async function uploadAIImageToS3(file: Express.Multer.File): Promise<string> {
   try {
     if (!file) {
       throw new Error('Not found File')
@@ -116,7 +106,7 @@ async function uploadAIImageToS3(file: Express.Multer.File): Promise<void> {
     await ImageAIRender.create({ id: uuidv4(), date: new Date(), imageUrl: image, deleted: false })
 
     await s3.send(new PutObjectCommand(params))
-    return Promise.resolve()
+    return image
   } catch (error) {
     console.error('Error uploading file:', error)
     return Promise.reject(error)

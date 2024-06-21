@@ -6,13 +6,12 @@ import MediaService from '~/services/media.service'
 async function uploadImageClothes(req: Request, res: Response): Promise<void> {
   try {
     const file = req.file
-    const productId = req.body.productId
     if (!file) {
       res.json(responseStatus.MissingFieldResponse('No file uploaded'))
       return
     }
 
-    const result = await MediaService.uploadImageClothesToS3(productId, file)
+    const result = await MediaService.uploadImageClothesToS3(file)
     res.json(responseStatus.CreateSuccessResponse('Upload image success', result))
   } catch (error: string | any) {
     res.json(responseStatus.InternalErrorResponse(error.message))

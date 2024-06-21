@@ -26,12 +26,8 @@ const bucketAccessKey = process.env.AWS_ACCESS_KEY_ID;
 const bucketSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const bucketName = process.env.AWS_S3_BUCKET;
 const bucketRegion = process.env.AWS_REGION;
-async function uploadImageClothesToS3(productId, file) {
+async function uploadImageClothesToS3(file) {
     try {
-        const product = await product_service_1.default.getProductById(productId);
-        if (!product) {
-            throw new Error('Not found Product');
-        }
         if (!file) {
             throw new Error('Not found File');
         }
@@ -42,11 +38,6 @@ async function uploadImageClothesToS3(productId, file) {
             throw new Error('File size exceeds the maximum limit of 5MB.');
         }
         const fileName = `Image_${Date.now().toString()}_${file.mimetype.split('/')[1]}`;
-        if (product.imageUrl) {
-            const parts = product.imageUrl.split('/');
-            const fileNameAWS = parts[parts.length - 1];
-            await deleteFileFromS3(fileNameAWS);
-        }
         const params = {
             Bucket: bucketName,
             Key: fileName,
@@ -54,10 +45,8 @@ async function uploadImageClothesToS3(productId, file) {
             ContentType: file.mimetype
         };
         const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
-        product.imageUrl = image;
-        await product_service_1.default.updateProduct(product);
         await s3_config_1.default.send(new client_s3_1.PutObjectCommand(params));
-        return Promise.resolve();
+        return image;
     }
     catch (error) {
         console.error('Error uploading file:', error);
@@ -111,7 +100,7 @@ async function uploadAIImageToS3(file) {
         const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
         await imageAIRender_model_1.ImageAIRender.create({ id: (0, uuid_1.v4)(), date: new Date(), imageUrl: image, deleted: false });
         await s3_config_1.default.send(new client_s3_1.PutObjectCommand(params));
-        return Promise.resolve();
+        return image;
     }
     catch (error) {
         console.error('Error uploading file:', error);
