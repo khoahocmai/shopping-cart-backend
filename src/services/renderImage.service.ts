@@ -5,6 +5,8 @@ import { Hash } from '@smithy/hash-node'
 import { HttpRequest } from '@smithy/protocol-http'
 import { parseUrl } from '@smithy/url-parser'
 import { Buffer } from 'buffer'
+import fs from 'fs'
+import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 
 import s3 from '~/configs/s3.config'
@@ -34,25 +36,9 @@ async function generateImageFromPrompt(data: { inputs: string }): Promise<string
     method: 'POST',
     body: JSON.stringify(data)
   })
-  const arrayBuffer = await response.arrayBuffer()
-  const file = Buffer.from(arrayBuffer)
   const fileName = `Image_${Date.now().toString()}`
 
-  const params = {
-    Bucket: bucketName,
-    Key: fileName,
-    Body: file,
-    ContentType: 'image/png'
-  }
   const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`
-  // const imageAIRender = await ImageAIRender.create({
-  //   id: uuidv4(),
-  //   date: new Date(),
-  //   imageUrl: image,
-  //   deleted: false
-  // })
-
-  await s3.send(new PutObjectCommand(params))
 
   // const url = parseUrl(imageAIRender.imageUrl)
   // const s3Presigner = new S3RequestPresigner({
@@ -70,6 +56,18 @@ async function generateImageFromPrompt(data: { inputs: string }): Promise<string
   //   })
   // )
   // return formatUrl(presignedObj)
+
+  const blob = await response.blob()
+
+  const file = Buffer.from(await blob.arrayBuffer())
+  const params = {
+    Bucket: bucketName,
+    Key: fileName,
+    Body: file,
+    ContentType: 'image/png'
+  }
+  await s3.send(new PutObjectCommand(params))
+
   return image
 }
 

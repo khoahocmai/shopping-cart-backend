@@ -28,23 +28,8 @@ async function generateImageFromPrompt(data) {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    const arrayBuffer = await response.arrayBuffer();
-    const file = buffer_1.Buffer.from(arrayBuffer);
     const fileName = `Image_${Date.now().toString()}`;
-    const params = {
-        Bucket: bucketName,
-        Key: fileName,
-        Body: file,
-        ContentType: 'image/png'
-    };
     const image = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
-    // const imageAIRender = await ImageAIRender.create({
-    //   id: uuidv4(),
-    //   date: new Date(),
-    //   imageUrl: image,
-    //   deleted: false
-    // })
-    await s3_config_1.default.send(new client_s3_1.PutObjectCommand(params));
     // const url = parseUrl(imageAIRender.imageUrl)
     // const s3Presigner = new S3RequestPresigner({
     //   region: bucketRegion,
@@ -61,6 +46,15 @@ async function generateImageFromPrompt(data) {
     //   })
     // )
     // return formatUrl(presignedObj)
+    const blob = await response.blob();
+    const file = buffer_1.Buffer.from(await blob.arrayBuffer());
+    const params = {
+        Bucket: bucketName,
+        Key: fileName,
+        Body: file,
+        ContentType: 'image/png'
+    };
+    await s3_config_1.default.send(new client_s3_1.PutObjectCommand(params));
     return image;
 }
 async function createAIImage(imageUrl) {
